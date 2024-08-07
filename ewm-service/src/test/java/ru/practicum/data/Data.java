@@ -173,6 +173,13 @@ public class Data {
                     .build();
         }
 
+        if (type.equals(Category.class)) {
+            return (D) Category.builder()
+                    .id(i)
+                    .name("Категория" + i)
+                    .build();
+        }
+
         return null;
     }
 

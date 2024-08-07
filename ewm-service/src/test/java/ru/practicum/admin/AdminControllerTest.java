@@ -1,5 +1,6 @@
 package ru.practicum.admin;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -15,6 +16,7 @@ import ru.practicum.events.EventsController;
 import ru.practicum.stats.Stats;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -29,17 +31,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AdminControllerTest extends Controller {
 
 
+     Map<Integer,CategoryDto> categoryDtoMap;
 
     @BeforeEach
-    void setUp() {
-
+     void setUp() {
+        categoryDtoMap = getCategoryDtoMap(2);
     }
 
     @Test
     void addNewCategory() throws Exception {
-        CategoryDto ca = new CategoryDto(1,"name");
 
-        when(adminService.addNewCategory(any(NewCategoryDto.class),any())).thenReturn(ca);
+
+        when(adminService.addNewCategory(any(NewCategoryDto.class),any())).thenReturn(categoryDtoMap.get(1));
 
             mvc.perform(post("/admin/categories")
                             .content(objectMapper.writeValueAsString(new NewCategoryDto("name",1)))
