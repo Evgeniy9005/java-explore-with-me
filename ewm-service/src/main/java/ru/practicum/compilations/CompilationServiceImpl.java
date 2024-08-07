@@ -26,10 +26,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CompilationServiceImpl implements CompilationService {
 
-    private static final String COMPILATION = "Compilation: ";
-
-    private static final String APP = "ewm-main-service";
-
     private final CompilationRepository compilationRepository;
 
     private final CompilationMapper compilationMapper;
@@ -45,7 +41,6 @@ public class CompilationServiceImpl implements CompilationService {
                                                 int size,
                                                 HttpServletRequest request
     ) {
-        //log.info("{} отправлена статистика {}",COMPILATION,getStatsClient().put(hit(APP,request)));
         log.info("Входные параметры при получении подборок pinned = {}, from = {}, size = {}",pinned,from,size);
         List<Compilation> compilationList;
         List<CompilationDto> compilationDtoList = new LinkedList<>();
@@ -53,7 +48,7 @@ public class CompilationServiceImpl implements CompilationService {
         List<Integer> eventIds = new ArrayList<>();
         Pageable pageable = Util.page(from,size);
 
-        if(pinned == null) { //вернуть все подряд
+        if (pinned == null) { //вернуть все подряд
             compilationList = compilationRepository.findAll(pageable).toList();
             log.info("Получены подборки в размере {}!",compilationList.size());
         } else {
@@ -61,7 +56,7 @@ public class CompilationServiceImpl implements CompilationService {
             log.info("Получены подборки в размере {}!",compilationList.size());
         }
 
-        if(compilationList.isEmpty()) {
+        if (compilationList.isEmpty()) {
             return compilationDtoList;
         }
 
@@ -74,10 +69,10 @@ public class CompilationServiceImpl implements CompilationService {
        });
 
         log.info("Получение compilationListMap со значениями в размере {}",compilationListMap.size());
-        // List<Integer> integerList = compilationListMap.values().stream().flatMap(List::stream).collect(Collectors.toList());
 
         List<Event> eventList = eventsRepository.findAllById(eventIds);
         log.info("Полученные события в количестве {}!",eventList);
+
         Map<Integer,Event> listEventMap = eventList.stream()
                 .collect(Collectors.toMap(event -> event.getId(),event -> event));
         log.info("Получили listEventMap количеством значений {}!",listEventMap.size());
@@ -98,11 +93,12 @@ public class CompilationServiceImpl implements CompilationService {
 
     @Override
     public CompilationDto getCompilation(int compId, HttpServletRequest request) {
-        //log.info("{} отправлена статистика {}",COMPILATION,getStatsClient().put(hit(APP,request)));
+
         Compilation compilation = compilationRepository.findById(compId)
                 .orElseThrow(() -> new NotFoundException("Не найдена подборка под id = {}!",compId));
+
         log.info("Получена подборка {}!",compilation);
-        
+
         List<Integer> eventIds = parsingJsonIdEvents(compilation.getEvents());
 
         List<Event> eventList = eventsRepository.findAllById(eventIds);
@@ -114,10 +110,10 @@ public class CompilationServiceImpl implements CompilationService {
         return compilationDto;
     }
 
-    private List<Integer> parsingJsonIdEvents(String json){
+    private List<Integer> parsingJsonIdEvents(String json) {
         List<Integer> eventIds = new ArrayList<>();
 
-        if(json == null){
+        if (json == null) {
             return eventIds;
         }
 

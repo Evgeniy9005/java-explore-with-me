@@ -1,6 +1,5 @@
 package ru.practicum.events;
 
-
 import ru.practicum.constants.SortEvents;
 import ru.practicum.events.dto.EventFullDto;
 import ru.practicum.events.dto.EventShortDto;

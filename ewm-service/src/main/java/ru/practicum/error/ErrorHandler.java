@@ -10,11 +10,8 @@ import ru.practicum.BadRequestException;
 import ru.practicum.ConflictException;
 import ru.practicum.NotFoundException;
 import ru.practicum.util.Util;
-
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RestControllerAdvice

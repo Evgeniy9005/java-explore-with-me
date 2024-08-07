@@ -2,22 +2,17 @@ package ru.practicum.events;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.practicum.NotFoundException;
 import ru.practicum.constants.SortEvents;
 import ru.practicum.constants.State;
 import ru.practicum.events.coverter.EventsMapper;
-import ru.practicum.events.dao.CustomizedEventRepository;
 import ru.practicum.events.dao.EventsRepository;
 import ru.practicum.events.dto.EventFullDto;
 import ru.practicum.events.dto.EventShortDto;
 import ru.practicum.events.model.Event;
 import ru.practicum.util.Util;
-
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,22 +73,22 @@ public class EventsServiceImpl implements EventsService {
         param.put("rangeStart",Util.getDateStart(rangeStart));
         param.put("rangeEnd",Util.getDateEnd(rangeEnd));
 
-        if(onlyAvailable) { //только события у которых не исчерпан лимит запросов на участие
+        if (onlyAvailable) { //только события у которых не исчерпан лимит запросов на участие
           //  qParticipantLimit = "and (count(pr.id) < e.participantLimit or e.participantLimit = 0)";
             qParticipantLimit = "and e.confirmedRequests < e.participantLimit or e.participantLimit = 0) ";
         }
 
-        if(paid != null) { //поиск платных и бесплатных событий
+        if (paid != null) { //поиск платных и бесплатных событий
            qPaid = "and e.paid = :paid ";
            param.put("paid",paid);
         }
 
-        if(categories != null) {
+        if (categories != null) {
             qCategories = "and e.category.id in(:categories) ";
             param.put("categories",categories);
         }
 
-        if(text != null) {
+        if (text != null) {
             qText = "and UPPER(e.annotation) like UPPER(:text) ";
             param.put("text",text);
         }
@@ -141,7 +136,7 @@ public class EventsServiceImpl implements EventsService {
         String ip = request.getRemoteAddr();
 
         Event event = eventsRepository.findByIdAndState(id, State.PUBLISHED)
-                .orElseThrow(()-> new NotFoundException("Не найдено событие под id = #",id));
+                .orElseThrow(() -> new NotFoundException("Не найдено событие под id = #",id));
 
         int views = event.getViews();
 
@@ -161,14 +156,14 @@ public class EventsServiceImpl implements EventsService {
     private boolean searchIP(int eventId, String ip) {
         List<String> ipList = new ArrayList<>();
 
-        if(address.containsKey(eventId)) {//если событие просматривалось
-            if(address.get(eventId).contains(ip)) {//с этого ip был запрос на просмотр
+        if (address.containsKey(eventId)) { //если событие просматривалось
+            if (address.get(eventId).contains(ip)) { //с этого ip был запрос на просмотр
                 return false;
             } else { //если не было, то запомнить
                 address.get(eventId).add(ip);
                 return true;
             }
-        } else {//если событие не просматривалось
+        } else { //если событие не просматривалось
             ipList.add(ip);
             address.put(eventId,ipList);
             return true;

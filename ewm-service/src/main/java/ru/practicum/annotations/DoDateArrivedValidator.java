@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.time.LocalDateTime;
 
-public class DoDateArrivedValidator implements ConstraintValidator<DoDateArrived, String>{
+public class DoDateArrivedValidator implements ConstraintValidator<DoDateArrived, String> {
 
 
     @Override

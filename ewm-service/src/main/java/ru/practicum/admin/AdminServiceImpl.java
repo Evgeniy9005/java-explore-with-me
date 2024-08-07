@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -22,7 +20,6 @@ import ru.practicum.compilations.model.Compilation;
 import ru.practicum.constants.State;
 import ru.practicum.events.coverter.EventsMapper;
 import ru.practicum.events.dao.EventsRepository;
-import ru.practicum.events.dto.EventShortDto;
 import ru.practicum.events.model.Event;
 import ru.practicum.users.converter.UserMapper;
 import ru.practicum.users.request.NewUserRequest;
@@ -37,13 +34,12 @@ import ru.practicum.users.model.User;
 import ru.practicum.util.Patch;
 import ru.practicum.util.Util;
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import static ru.practicum.util.Util.page;
 import static ru.practicum.util.Patch.patchEventAdmin;
+
 
 @Slf4j
 @Service
@@ -173,7 +169,7 @@ public class AdminServiceImpl implements AdminService {
     public EventFullDto upEvent(UpdateEventAdminRequest eventAdminRequest, int eventId,HttpServletRequest request) {
         Integer categoryId = eventAdminRequest.getCategory();
         Category category = null;
-        if(categoryId != null) {
+        if (categoryId != null) {
             category = categoryRepository.findById(categoryId)
                     .orElseThrow(() -> new NotFoundException("Не найдена категория # при обновлении события!", categoryId));
         }
@@ -198,7 +194,7 @@ public class AdminServiceImpl implements AdminService {
         Pageable pageable = page(from,size,sort);
         log.info("Входные параметры ibs = {} from = {} size = {}",ids,from,size);
 
-        if(ids != null) {
+        if (ids != null) {
             userDtoList = userRepository.findAllByIdWithPageable(ids,pageable).stream()
                     .map(user -> userMapper.toUserDto(user))
                     .collect(Collectors.toList());

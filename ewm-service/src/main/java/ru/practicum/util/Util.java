@@ -76,7 +76,7 @@ public class Util {
     }
 
     public static List<Integer> getNumbers(String arrayString) {
-        if(arrayString == null) {
+        if (arrayString == null) {
             throw new BadRequestException(
                     "Не верно заданы входные параметры #, " +
                             "Массив данных должен быть числа и разделены запятыми, без пробелов",arrayString);
@@ -84,7 +84,7 @@ public class Util {
 
         String [] result = arrayString.split(",");
 
-        List<Integer> list = Arrays.stream(result).map(i-> {
+        List<Integer> list = Arrays.stream(result).map(i -> {
             try {
                 return Integer.parseInt(i);
             } catch (NumberFormatException e) {
@@ -108,7 +108,7 @@ public class Util {
 
     public static LocalDateTime getDateStart(String date) {
 
-        if(date == null || date.isBlank()) {
+        if (date == null || date.isBlank()) {
             startDate = LocalDateTime.now().minusSeconds(1);
             log.info("Дата начала выборки по умолчанию {}", startDate);
         } else {
@@ -118,7 +118,7 @@ public class Util {
     }
 
     public static LocalDateTime getDateEnd(String date) {
-        if(date == null || date.isBlank()) {
+        if (date == null || date.isBlank()) {
             endDate = LocalDateTime.now().plusYears(10);
             log.info("Дата конца выборки по умолчанию {}", endDate);
         } else {

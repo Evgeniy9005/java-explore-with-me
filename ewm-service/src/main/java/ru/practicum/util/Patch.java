@@ -11,7 +11,6 @@ import ru.practicum.constants.State;
 import ru.practicum.events.model.Event;
 import ru.practicum.events.model.Location;
 import ru.practicum.users.dto.UpdateEventUserRequest;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,7 +18,7 @@ import java.util.List;
 public class Patch {
     public static Event patchEventAdmin(Event updated,
                                         UpdateEventAdminRequest patch,
-                                        Category preСhecked, //заранее проверенная категория на наличие в БД указанная в объекте UpdateEventAdminRequest
+                                        Category preChecked, //заранее проверенная категория на наличие в БД указанная в объекте UpdateEventAdminRequest
                                         int eventId
     ) {
 
@@ -30,7 +29,7 @@ public class Patch {
         Location location = patch.getLocation();
         Float lat = null;
         Float lon = null;
-        if(location != null) {
+        if (location != null) {
             lat = location.getLat();
             lon = location.getLon();
         }
@@ -38,13 +37,13 @@ public class Patch {
         Integer participantLimit = patch.getParticipantLimit();
         Boolean requestModeration = patch.getRequestModeration();
         State state = getState(patch.getStateAction(),updated.getState(),eventId);
-        if(!updated.getState().equals(State.PENDING)) {
+        if (!updated.getState().equals(State.PENDING)) {
             throw new ConflictException("Событие можно публиковать, только если оно в состоянии ожидания публикации!");
         }
         String title = patch.getTitle();
         return updated.toBuilder()
                 .annotation(annotation == null ? updated.getAnnotation() : annotation)
-                .category(category == null ? updated.getCategory() : preСhecked)
+                .category(category == null ? updated.getCategory() : preChecked)
                 .description(description == null ? updated.getDescription() : description)
                 .eventDate(eventDate == null ? updated.getEventDate() : Util.getDate(eventDate))
                 .lat(lat == null ? updated.getLat() : lat)
@@ -58,8 +57,8 @@ public class Patch {
                 .build();
     }
 
-    private static State getState(String stateAction, State eventState, int eventId ) {
-        if(stateAction != null) {
+    private static State getState(String stateAction, State eventState, int eventId) {
+        if (stateAction != null) {
             switch (stateAction) {
                 case "PUBLISH_EVENT":
                     return State.PUBLISHED;
@@ -80,7 +79,7 @@ public class Patch {
 
     public static Event patchEventUser(Event updated,
                                         UpdateEventUserRequest patch,
-                                        Category preСhecked, //заранее проверенная категория на наличие в БД указанная в объекте UpdateEventAdminRequest
+                                        Category preCheck, //заранее проверенная категория на наличие в БД указанная в объекте UpdateEventAdminRequest
                                         int eventId
     ) {
 
@@ -93,21 +92,21 @@ public class Patch {
         Location location = patch.getLocation();
         Float lat = null;
         Float lon = null;
-        if(location != null) {
+        if (location != null) {
             lat = location.getLat();
             lon = location.getLon();
         }
         Boolean paid = patch.getPaid();
         Boolean requestModeration = patch.getRequestModeration();
         State state = getState(patch.getStateAction(),updated.getState(),eventId);
-        if(updated.getState().equals(State.PUBLISHED) ) {
+        if (updated.getState().equals(State.PUBLISHED)) {
             throw new ConflictException("Событие можно публиковать, только если оно в состоянии ожидания публикации или отменено!");
         }
 
         String title = patch.getTitle();
         return updated.toBuilder()
                 .annotation(annotation == null ? updated.getAnnotation() : annotation)
-                .category(category == null ? updated.getCategory() : preСhecked)
+                .category(category == null ? updated.getCategory() : preCheck)
                 .description(description == null ? updated.getDescription() : description)
                 .eventDate(eventDate == null ? updated.getEventDate() : Util.getDate(eventDate))
                 .lat(lat == null ? updated.getLat() : lat)
@@ -129,7 +128,7 @@ public class Patch {
         List<Integer> eventIds = patch.getEvents();
         Object [] result = new Object[2];
 
-        if(eventIds != null) {
+        if (eventIds != null) {
             try {
                 json = objectMapper.writeValueAsString(eventIds);
             } catch (JsonProcessingException e) {

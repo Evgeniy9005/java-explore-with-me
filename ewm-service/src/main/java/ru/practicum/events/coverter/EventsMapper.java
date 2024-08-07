@@ -19,14 +19,10 @@ import java.time.LocalDateTime;
 @Mapper(componentModel = "spring")
 public interface EventsMapper {
 
-   // Event toEvent(EventFullDto eventFullDto);
-
     @Mapping(target = "category",expression = "java(categoryToCategoryDto(event))")
     @Mapping(target = "initiator",expression = "java(userToUserShortDto(event))")
     @Mapping(target = "eventDate",expression = "java(getConvertDateEventDate(event))")
     EventShortDto toEventShortDto(Event event);
-
-
 
     @Mapping(target = "category",expression = "java(categoryToCategoryDto(event))")
     @Mapping(target = "initiator",expression = "java(userToUserShortDto(event))")
@@ -63,7 +59,7 @@ public interface EventsMapper {
     /*Преобразование даты публикации события в строку для DTO*/
     default String getConvertDatePublishedOn(Event event) {
         LocalDateTime publishedOn = event.getPublishedOn();
-        if(publishedOn == null) {
+        if (publishedOn == null) {
             return "";
         }
         return publishedOn.format(Util.getFormatter());

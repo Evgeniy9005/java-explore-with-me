@@ -1,9 +1,7 @@
 package ru.practicum.compilations.model;
 
 import lombok.*;
-import ru.practicum.events.model.Event;
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -21,8 +19,6 @@ public class Compilation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     /**Список событий входящих в подборку*/
-    //@OneToMany
-    //@JoinColumn(name = "id_compilation")
     @Column(name = "list_events_json")
     private String events;
     /**Закреплена ли подборка на главной странице сайта*/

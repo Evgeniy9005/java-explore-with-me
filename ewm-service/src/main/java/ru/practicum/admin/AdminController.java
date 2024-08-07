@@ -18,11 +18,8 @@ import ru.practicum.users.dto.UserDto;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
-import static ru.practicum.stats.Stats.getStatsClient;
-import static ru.practicum.stats.Stats.hit;
 
 @Slf4j
 @RestController

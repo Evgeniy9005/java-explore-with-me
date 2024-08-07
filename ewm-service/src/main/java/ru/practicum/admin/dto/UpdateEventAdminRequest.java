@@ -6,13 +6,9 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import ru.practicum.annotations.DoDateArrived;
 import ru.practicum.events.model.Location;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 
-/**Данные для изменения информации о событии. Если поле в запросе не указано (равно null)
-- значит изменение этих данных не требуется.*/
 @Data
 @RequiredArgsConstructor
 @Builder(toBuilder = true)

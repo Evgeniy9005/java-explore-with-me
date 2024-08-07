@@ -29,7 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryMapper categoryMapper;
 
     @Override
-    public List<CategoryDto> getCategories( int from, int size, HttpServletRequest request) {
+    public List<CategoryDto> getCategories(int from, int size, HttpServletRequest request) {
         log.info("{} отправлена статистика {}",CATEGORY,getStatsClient().put(hit(APP,request)));
         log.info("{} запрос на получение списка категорий от {} до {}",CATEGORY,from,size);
         List<CategoryDto> categoryDtoList = categoryRepository.findAll(Util.page(from,size))
@@ -43,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
         log.info("{} отправлена статистика {}",CATEGORY,getStatsClient().put(hit(APP,request)));
         log.info("{} запрос на получение категории по id {}",CATEGORY, catId);
         Category category = categoryRepository.findById(catId)
-                .orElseThrow(()-> new NotFoundException("Не найдена категория под id = #",catId));
+                .orElseThrow(() -> new NotFoundException("Не найдена категория под id = #",catId));
         log.info("Получена категория {}",category);
         return categoryMapper.toCategoryDto(category);
     }

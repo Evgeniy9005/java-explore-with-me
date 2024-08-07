@@ -25,10 +25,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 public class UsersController {
-    private static final String USERS = "Users: ";
-
-    private static final String APP = "ewm-main-service";
-
     private final UserService userService;
 
 
@@ -57,8 +53,6 @@ public class UsersController {
                                                                 @PathVariable @Positive int eventId,
                                                                 HttpServletRequest request
     ) {
-
-       // log.info("Отправлена статистика {}",getStatsClient().put(hit(APP,request)));
         return userService.getFullInfoAboutEventAddedByCurrentUser(userId,eventId,request);
     }
 
@@ -68,7 +62,6 @@ public class UsersController {
                                                   @PathVariable @Positive int eventId,
                                                   HttpServletRequest request
     ) {
-
         return userService.upEventAddedByCurrentUser(eventUserRequest,userId,eventId,request);
     }
 
@@ -77,7 +70,6 @@ public class UsersController {
                                                                                        @PathVariable int eventId,
                                                                                        HttpServletRequest request
     ) {
-        //log.info("Отправлена статистика {}",getStatsClient().put(hit(APP,request)));
         return userService.getInformationRequestsToParticipateCurrentUserEvent(userId,eventId,request);
     }
 
@@ -96,7 +88,6 @@ public class UsersController {
             @PathVariable @Positive int userId,
             HttpServletRequest request
     ) {
-      //  log.info("Отправлена статистика {}",getStatsClient().put(hit(APP,request)));
         return userService.getInfoCurrentUserRequestsParticipateOtherPeopleEvents(userId,request);
     }
 
@@ -112,7 +103,7 @@ public class UsersController {
     }
 
     @PatchMapping("/users/{userId}/requests/{requestId}/cancel") //Отмена своего запроса на участие в событии
-    public ParticipationRequestDto upEventToParticipateCancel (
+    public ParticipationRequestDto upEventToParticipateCancel(
             @PathVariable @Positive int userId,
             @PathVariable @Positive int requestId,
             HttpServletRequest request

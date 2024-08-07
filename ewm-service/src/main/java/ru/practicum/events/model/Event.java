@@ -5,8 +5,6 @@ import ru.practicum.category.model.Category;
 import ru.practicum.constants.State;
 import ru.practicum.users.model.User;
 import javax.persistence.*;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Objects;
 

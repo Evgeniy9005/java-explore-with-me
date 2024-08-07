@@ -25,10 +25,8 @@ import ru.practicum.users.request.dto.ParticipationRequestDto;
 import ru.practicum.users.dto.UpdateEventUserRequest;
 import ru.practicum.users.request.converter.RequestMapper;
 import ru.practicum.users.request.dao.RequestRepository;
-import ru.practicum.users.request.model.EventIdAndParticipantId;
 import ru.practicum.users.request.model.ParticipationRequest;
 import ru.practicum.util.Util;
-
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -77,7 +75,6 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
         log.info("Получены события в размере {}",eventShortDtoList.size());
         eventShortDtoList.stream().forEach(e -> log.info(e.toString()));
-        //log.info("Отправлена статистика {}",getStatsClient().put(hit(APP,request)));
         return eventShortDtoList;
     }
 
@@ -85,7 +82,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public EventFullDto addEventUser(NewEventDto newEventDto, int userId, HttpServletRequest request) {
         log.info("{} Добавление нового события {} пользователем {}",USERS,newEventDto,userId);
-       // log.info("Отправлена статистика {}",getStatsClient().put(hit(APP,request)));
         Location location = newEventDto.getLocation();
 
         boolean moderation = newEventDto.getRequestModeration() == null ? true : newEventDto.getRequestModeration();
@@ -108,7 +104,7 @@ public class UserServiceImpl implements UserService {
 
         Event newEvent = eventsRepository.save(event);
 
-        log.info( "Создано событие {}",newEvent);
+        log.info("Создано событие {}",newEvent);
 
         EventFullDto eventFullDto = eventsMapper.toEventFullDto(event);
 
@@ -124,7 +120,7 @@ public class UserServiceImpl implements UserService {
                                                                 HttpServletRequest request
     ) {
         Event event = eventsRepository.findByInitiatorIdAndId(userId,eventId)
-                .orElseThrow(()-> new NotFoundException("Не найдено события # " +
+                .orElseThrow(() -> new NotFoundException("Не найдено события # " +
                         "добавленном текущим пользователем #",userId,eventId));
 
         EventFullDto eventFullDto = eventsMapper.toEventFullDto(event);
@@ -210,7 +206,7 @@ public class UserServiceImpl implements UserService {
         List<ParticipationRequest> prList = requestRepository.findAllById(requestIds);
         log.info("Получены затребованные заявки {} !",requestIds);
 
-        if(prList.isEmpty()) {
+        if (prList.isEmpty()) {
             throw new ConflictException(
                     "Пустой список заявок при (подтверждена, отменена) заявок на участие в событии # ",eventId
             );
@@ -223,7 +219,7 @@ public class UserServiceImpl implements UserService {
         confirmedRequests = event.getConfirmedRequests();
         log.info("Полученное количество подтвержденных заявок {} на событие {}!",confirmedRequests,eventId);
 
-        if (status) {//если на подтверждение
+        if (status) { //если на подтверждение
             mapPr = prList.stream()
                     .filter(pr -> pr.getStatus().equals(StatusRequest.PENDING)) //отобрать только те что на рассмотрении
                     .map(pr -> limit(pr,participantLimit,confirmedRequests))
@@ -243,7 +239,7 @@ public class UserServiceImpl implements UserService {
                conflictException = new ConflictException("Попытка принять заявку на участие в событии, когда лимит %s уже достигнут!",participantLimit);
             }
 
-        } else {//если на отмену
+        } else { //если на отмену
             mapPr = prList.stream()
                     .map(pr -> pr.getStatus().equals(StatusRequest.CONFIRMED) ?  //принятые заявки нельзя отменить
                                     pr :
@@ -277,7 +273,7 @@ public class UserServiceImpl implements UserService {
 
                     });
 
-        if(conflictException != null) {
+        if (conflictException != null) {
              throw conflictException;
         }
 
@@ -285,7 +281,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private ParticipationRequest limit(ParticipationRequest pr, int pl, int cr) {
-        if (pl != 0 && cr >= pl) {//говорит о том что лимит заполнен и если ограничение отсутствует
+        if (pl != 0 && cr >= pl) { //говорит о том что лимит заполнен и если ограничение отсутствует
            return pr.toBuilder().status(StatusRequest.REJECTED).build();
         } else {
             confirmedRequests += 1;
@@ -322,7 +318,7 @@ public class UserServiceImpl implements UserService {
         StatusRequest status = StatusRequest.PENDING;
 
         Event event = eventsRepository.findById(eventId)
-                .orElseThrow(()-> new NotFoundException(
+                .orElseThrow(() -> new NotFoundException(
                         "Не найдено событие # при добавлении участия в событии!",eventId)
                 );
 
@@ -352,12 +348,7 @@ public class UserServiceImpl implements UserService {
 
         //если для события отключена пре-модерация запросов на участие, то запрос должен автоматически
         //перейти в состояние подтвержденного
-
-       /* if (moderation) {// moderation = true- заявка подтверждается инициатором
-            status = StatusRequest.PENDING;
-        }*/
-
-        if (!moderation || participantLimit == 0) {// moderation = false - заявка на событие подтверждается автоматически
+        if (!moderation || participantLimit == 0) { // moderation = false - заявка на событие подтверждается автоматически
             status = StatusRequest.CONFIRMED;
             event = eventsRepository.save(event.toBuilder().confirmedRequests(event.getConfirmedRequests() + 1).build());
             log.info(
@@ -382,12 +373,12 @@ public class UserServiceImpl implements UserService {
 
     //Отмена своего запроса на участие в событии ("/users/{userId}/requests/{requestId}/cancel")
     @Override
-    public ParticipationRequestDto upEventToParticipateCancel (int userId,
+    public ParticipationRequestDto upEventToParticipateCancel(int userId,
                                                                int requestId,
                                                                HttpServletRequest request
     ) {
         ParticipationRequest pr = requestRepository.findById(requestId)
-                .orElseThrow(()-> new NotFoundException("Не найден запрос # на событие!",requestId));
+                .orElseThrow(() -> new NotFoundException("Не найден запрос # на событие!",requestId));
 
         if (pr.getRequester().getId() != userId) {
             throw new NotFoundException("Пользователь # не создавал запрос # на событие!",userId,requestId);
