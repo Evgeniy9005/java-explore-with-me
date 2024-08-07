@@ -2,9 +2,11 @@ package ru.practicum.data;
 
 import dto.ViewStats;
 import lombok.extern.slf4j.Slf4j;
+import ru.practicum.admin.dto.UpdateEventAdminRequest;
 import ru.practicum.category.dto.CategoryDto;
 import ru.practicum.category.model.Category;
 import ru.practicum.constants.State;
+import ru.practicum.constants.StateAction;
 import ru.practicum.constants.StatusRequest;
 import ru.practicum.events.dto.EventFullDto;
 import ru.practicum.events.dto.EventShortDto;
@@ -61,7 +63,7 @@ public class Data {
             return (D) User.builder()
                     .id(i)
                     .name("Пользователь" + i)
-                    .email("email" + i +"@mail.ru")
+                    .email("email" + i + "@mail.ru")
                     .build();
         }
 
@@ -155,66 +157,21 @@ public class Data {
                         .build();
             }
         }
-/*
-        if (type.equals(Item.class)) {
-            if (objects.length == 2) {
-                if (objects[0].getClass().equals(User.class) && objects[1].getClass().equals(Long.class)) {
 
-                    return (D) new Item(i, "item" + i, "описание вещи " + i, true, (User) objects[0],(long)objects[1]);
-                }
-            }
+        if (type.equals(UpdateEventAdminRequest.class)) {
+            return (D) UpdateEventAdminRequest.builder()
+                    .title("Заголовок " + i)
+                    .annotation("Краткое описание " + i)
+                    .category(i)
+                    .eventDate(LocalDateTime.now().plusDays(1).format(formatter))
+                    .paid(true)
+                    .location(new Location(52.2f,54.4f))
+                    .description("Полное описание события " + i)
+                    .participantLimit(0)
+                    .requestModeration(false)
+                    .stateAction(StateAction.PUBLISH_EVENT.toString())
+                    .build();
         }
-
-
-        if (type.equals(Booking.class)) {
-            if (objects.length == 2) {
-                if (objects[0].getClass().equals(User.class) && objects[1].getClass().equals(Item.class)) {
-                    try {
-                        Thread.sleep(20);
-                    } catch (InterruptedException e) {
-                        System.out.println(e);
-                    }
-                    return (D) Booking.builder()
-                            .id(i)
-                            .booker((User) objects[0])
-                            .item((Item) objects[1])
-                            .start(LocalDateTime.now())
-                            .end(LocalDateTime.now().plusDays(1))
-                            .status(Status.APPROVED)
-                            .build();
-                }
-            }
-
-        }
-
-        if (type.equals(CreateBooking.class)) {
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
-            if (objects.length == 1) {
-                if (objects[0].getClass().equals(Long.class)) {
-                    return (D) new CreateBooking((long) objects[0],
-                            LocalDateTime.now().plusSeconds(60),
-                            LocalDateTime.now().plusDays(1));
-                }
-            }
-        }
-
-        if (type.equals(Comment.class)) {
-            if (objects.length == 2) {
-                if (objects[0].getClass().equals(Item.class) && objects[1].getClass().equals(User.class)) {
-                    return (D) Comment.builder()
-                            .id(i)
-                            .text("Text" + i)
-                            .item((Item) objects[0])
-                            .author((User) objects[1])
-                            .created(LocalDateTime.of(2024,1,1,1,1,1))
-                            .build();
-                }
-            }
-        }*/
 
         return null;
     }

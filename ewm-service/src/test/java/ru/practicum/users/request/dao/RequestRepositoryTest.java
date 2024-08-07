@@ -6,26 +6,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import ru.practicum.admin.AdminService;
 import ru.practicum.category.dao.CategoryRepository;
 import ru.practicum.category.model.Category;
 import ru.practicum.constants.StatusRequest;
-import ru.practicum.data.Data.*;
 import ru.practicum.events.dao.EventsRepository;
-import ru.practicum.events.dto.NewEventDto;
 import ru.practicum.events.model.Event;
-import ru.practicum.users.UserService;
 import ru.practicum.users.dao.UserRepository;
 import ru.practicum.users.model.User;
-import ru.practicum.users.request.NewUserRequest;
-import ru.practicum.users.request.model.EventIdAndParticipantId;
 import ru.practicum.users.request.model.ParticipationRequest;
-
 import javax.persistence.EntityManager;
-
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static ru.practicum.data.Data.generationData;
 import static ru.practicum.data.Data.printList;
 

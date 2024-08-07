@@ -1,16 +1,9 @@
 package ru.practicum.events;
 
 
-import lombok.RequiredArgsConstructor;
+
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import ru.practicum.constants.SortEvents;
-import ru.practicum.events.dto.EventShortDto;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 //@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class EventsServiceImplTest {
