@@ -73,15 +73,11 @@ public class AdminServiceImpl implements AdminService {
     public CategoryDto addNewCategory(NewCategoryDto newCategoryDto,HttpServletRequest request) {
         Category category;
         log.info("Входные параметры при добавлении категории! newCategoryDto = {}",newCategoryDto);
-        //try {
-            category = categoryRepository.save(Category.builder()
+
+        category = categoryRepository.save(Category.builder()
                     .name(newCategoryDto.getName())
                     .build());
-        /*} catch (DataIntegrityViolationException e) {
-            throw new ConflictException("Добавление новой категории с занятым именем #!",newCategoryDto.getName());
-        }*/
 
-        // log.info("{} отправлена статистика {}",ADMIN,getStatsClient().put(hit(APP,request)));
         CategoryDto categoryDto = categoryMapper.toCategoryDto(category);
 
         log.info("Сохраненная категория {}",categoryDto);
@@ -92,14 +88,10 @@ public class AdminServiceImpl implements AdminService {
     /*Удаление категории*/
     @Override
     public void deleteCategory(int catId,HttpServletRequest request) {
-       // try {
-            categoryRepository.deleteById(catId);
-       /* } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("Удаление категории # с привязанными событиями !",catId);
-        }*/
+
+        categoryRepository.deleteById(catId);
 
         log.info("Категория {} удалена",catId);
-        // log.info("{} отправлена статистика {}",ADMIN,getStatsClient().put(hit(APP,request)));
     }
 
 
