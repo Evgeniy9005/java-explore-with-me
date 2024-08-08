@@ -10,12 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
+import ru.practicum.admin.dto.UpdateEventAdminRequest;
 import ru.practicum.category.dto.CategoryDto;
 import ru.practicum.category.dto.NewCategoryDto;
 import ru.practicum.constants.State;
 import ru.practicum.data.Controller;
 import ru.practicum.events.EventsController;
 import ru.practicum.stats.Stats;
+import ru.practicum.users.request.NewUserRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
@@ -33,8 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = AdminController.class)
 class AdminControllerTest extends Controller {
 
-
-     static Map<Integer,CategoryDto> categoryDtoMap;
 
     @BeforeEach
      void setUp() {
@@ -107,18 +107,53 @@ class AdminControllerTest extends Controller {
     }
 
     @Test
-    void upEvent() {
+    void upEvent() throws Exception {
+        when(adminService.upEvent(any(UpdateEventAdminRequest.class),anyInt(),any()))
+                .thenReturn(eventFullDtoMap.get(1));
+
+        mvc.perform(patch("/admin/events/1")
+                        .content(objectMapper.writeValueAsString(updateEventAdminRequestList.get(0)))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+        verify(adminService).upEvent(any(),anyInt(),any());
     }
 
     @Test
-    void getUsers() {
+    void getUsers() throws Exception {
+        when(adminService.getUsers(any(),anyInt(),anyInt(),any()))
+                .thenReturn(userDtoList);
+
+        mvc.perform(get("/admin/users")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .param("ids", getUsersIdParam())
+                        .param("from","0")
+                        .param("size","100"))
+                .andDo(print())
+                .andExpect(status().isOk());
+        verify(adminService).getUsers(any(),anyInt(),anyInt(),any());
+
     }
 
     @Test
-    void addNewUser() {
+    void addNewUser() throws Exception {
+        when(adminService.addNewUser(any(NewUserRequest.class),any())).thenReturn(userDtoMap.get(1));
+
+        mvc.perform(post("/admin/users")
+                        .content(objectMapper.writeValueAsString(newUserRequestList.get(0)))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isCreated());
+        verify(adminService).addNewUser(any(NewUserRequest.class),any());
     }
 
-    @Test
+   /* @Test
     void deleteUser() {
     }
 
@@ -132,5 +167,5 @@ class AdminControllerTest extends Controller {
 
     @Test
     void upCompilation() {
-    }
+    }*/
 }

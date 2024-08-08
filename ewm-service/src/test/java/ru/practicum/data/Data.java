@@ -15,6 +15,7 @@ import ru.practicum.events.model.Event;
 import ru.practicum.events.model.Location;
 import ru.practicum.users.dto.UserShortDto;
 import ru.practicum.users.model.User;
+import ru.practicum.users.request.NewUserRequest;
 import ru.practicum.users.request.model.ParticipationRequest;
 
 import java.lang.reflect.Type;
@@ -37,6 +38,8 @@ public class Data {
 
 
     /**
+     <p><b>- NewUserRequest</b> баз параметров objects;</p>
+     <p><b>- Category</b> баз параметров objects;</p>
      <p><b>- EventShortDto</b> баз параметров objects;</p>
      <p><b>- EventFullDto</b> баз параметров objects;</p>
      <p><b>- NewEventDto</b> баз параметров objects;</p>
@@ -161,12 +164,12 @@ public class Data {
         if (type.equals(UpdateEventAdminRequest.class)) {
             return (D) UpdateEventAdminRequest.builder()
                     .title("Заголовок " + i)
-                    .annotation("Краткое описание " + i)
+                    .annotation("Краткое описание, аннотация " + i)
                     .category(i)
                     .eventDate(LocalDateTime.now().plusDays(1).format(formatter))
                     .paid(true)
                     .location(new Location(52.2f,54.4f))
-                    .description("Полное описание события " + i)
+                    .description("Полное описание события, описание " + i)
                     .participantLimit(0)
                     .requestModeration(false)
                     .stateAction(StateAction.PUBLISH_EVENT.toString())
@@ -178,6 +181,10 @@ public class Data {
                     .id(i)
                     .name("Категория" + i)
                     .build();
+        }
+
+        if (type.equals(NewUserRequest.class)) {
+            return (D) new NewUserRequest("email@mail" + i, "User" + i);
         }
 
         return null;

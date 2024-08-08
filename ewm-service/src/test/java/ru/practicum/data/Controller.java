@@ -11,6 +11,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import ru.practicum.admin.AdminService;
+import ru.practicum.admin.dto.UpdateEventAdminRequest;
 import ru.practicum.category.converter.CategoryMapper;
 import ru.practicum.category.converter.CategoryMapperImpl;
 import ru.practicum.category.dto.CategoryDto;
@@ -32,6 +33,7 @@ import ru.practicum.users.converter.UserMapper;
 import ru.practicum.users.converter.UserMapperImpl;
 import ru.practicum.users.dto.UserDto;
 import ru.practicum.users.model.User;
+import ru.practicum.users.request.NewUserRequest;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -79,6 +81,8 @@ public class Controller {
 
     protected Map<Integer, UserDto> userDtoMap;
 
+    protected List<NewUserRequest> newUserRequestList;
+
     protected UserMapper userMapper = new UserMapperImpl();
 
     protected List<Event> eventList;
@@ -92,6 +96,8 @@ public class Controller {
     protected Map<Integer,EventShortDto> eventShortDtoMap;
 
     protected EventsMapper eventsMapper = new EventsMapperImpl();
+
+    protected List<UpdateEventAdminRequest> updateEventAdminRequestList;
 
     protected List<Compilation> compilationList;
 
@@ -121,6 +127,8 @@ public class Controller {
                 .collect(Collectors.toMap(UserDto::getId,u -> u));
 
         userDtoList.addAll(userDtoMap.values());
+
+        newUserRequestList = generationData(createObjects,NewUserRequest.class);
     }
 
     protected void initEventWithParam(Integer createObjects) {
@@ -137,6 +145,8 @@ public class Controller {
 
         eventFullDtoList.addAll(eventFullDtoMap.values());
         eventShortDtoList.addAll(eventShortDtoMap.values());
+
+        updateEventAdminRequestList = generationData(createObjects,UpdateEventAdminRequest.class);
     }
 
     protected String getUsersIdParam() throws Exception {
