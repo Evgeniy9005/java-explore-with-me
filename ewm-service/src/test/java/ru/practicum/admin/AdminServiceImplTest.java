@@ -155,6 +155,8 @@ class AdminServiceImplTest extends Controller {
 
     @Test
     void upCompilation() {
-        //  adminService.upCompilation()
+        when()
+        adminService.upCompilation(updateCompilationRequest,1,request);
+
     }
 }
