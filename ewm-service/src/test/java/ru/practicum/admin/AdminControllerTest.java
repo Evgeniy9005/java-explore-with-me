@@ -35,8 +35,6 @@ class AdminControllerTest extends Controller {
     @MockBean
     protected AdminService adminService;
 
-    @Mock
-    private DefaultData defaultData;
 
     @BeforeEach
      void setUp() {
@@ -90,14 +88,12 @@ class AdminControllerTest extends Controller {
         when(adminService.getEvents(any(),any(),any(),anyString(),anyString(),anyInt(),anyInt(),any()))
                 .thenReturn(eventFullDtoList);
 
-        when(defaultData.getIdList()).thenReturn(List.of(1,2));
-
         mvc.perform(get("/admin/events")
                         .content(objectMapper.writeValueAsString(eventFullDtoList))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
-                //.param("users", getUsersIdParam())
+                .param("users", getUsersIdParam())
                 .param("states",State.PUBLISHED.toString())
                 .param("categories","1,2")
                 .param("paid","true")
@@ -108,25 +104,6 @@ class AdminControllerTest extends Controller {
                 .andDo(print())
                 .andExpect(status().isOk());
         verify(adminService).getEvents(any(),any(),any(),anyString(),anyString(),anyInt(),anyInt(),any());
-
-        when(adminService.getEvents(any(),any(),any(),anyString(),anyString(),anyInt(),anyInt(),any()))
-                .thenReturn(eventFullDtoList);
-
-        mvc.perform(get("/admin/events")
-                        .content(objectMapper.writeValueAsString(eventFullDtoList))
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .param("users", getUsersIdParam())
-                        .param("states",State.PUBLISHED.toString())
-                        .param("categories","1,2")
-                        .param("paid","true")
-                        .param("rangeStart","2024-11-30 15:10:05")
-                        .param("rangeEnd","2024-12-31 15:10:05")
-                        .param("from","0")
-                        .param("size","100"))
-                .andDo(print())
-                .andExpect(status().isOk());
     }
 
     @Test
