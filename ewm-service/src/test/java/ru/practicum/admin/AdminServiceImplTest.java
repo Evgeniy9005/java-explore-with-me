@@ -1,5 +1,6 @@
 package ru.practicum.admin;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +12,7 @@ import ru.practicum.category.dao.CategoryRepository;
 import ru.practicum.category.dto.NewCategoryDto;
 import ru.practicum.category.model.Category;
 import ru.practicum.compilations.dao.CompilationRepository;
+import ru.practicum.compilations.model.Compilation;
 import ru.practicum.constants.State;
 import ru.practicum.data.Controller;
 import ru.practicum.events.dao.EventsRepository;
@@ -56,6 +58,7 @@ class AdminServiceImplTest extends Controller {
 
     @BeforeEach
     void setUp() {
+        objectMapper = new ObjectMapper();
         adminService = new AdminServiceImpl(categoryRepository,
                 categoryMapper,
                 userRepository,
@@ -140,14 +143,18 @@ class AdminServiceImplTest extends Controller {
 
     @Test
     void addNewCompilation() {
-        //adminService.addNewCompilation()
+        adminService.addNewCompilation(newCompilationDto,request);
+        verify(compilationRepository).save(any(Compilation.class));
     }
 
     @Test
     void deleteCompilation() {
+        adminService.deleteCompilation(1,request);
+        verify(compilationRepository).deleteById(1);
     }
 
     @Test
     void upCompilation() {
+        //  adminService.upCompilation()
     }
 }

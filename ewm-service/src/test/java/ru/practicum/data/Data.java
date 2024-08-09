@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import ru.practicum.admin.dto.UpdateEventAdminRequest;
 import ru.practicum.category.dto.CategoryDto;
 import ru.practicum.category.model.Category;
+import ru.practicum.compilations.dto.NewCompilationDto;
 import ru.practicum.compilations.model.Compilation;
 import ru.practicum.constants.State;
 import ru.practicum.constants.StateAction;
@@ -39,6 +40,8 @@ public class Data {
 
 
     /**
+     <p><b>- NewCompilationDto</b> c параметром objects List(Integer);</p>
+     <p><b>- Compilation</b> c параметром objects List(Integer);</p>
      <p><b>- NewUserRequest</b> баз параметров objects;</p>
      <p><b>- Category</b> баз параметров objects;</p>
      <p><b>- EventShortDto</b> баз параметров objects;</p>
@@ -188,17 +191,24 @@ public class Data {
             return (D) new NewUserRequest("email@mail" + i, "User" + i);
         }
 
-        if (type.equals(Compilation.class)) {
-            if (typeCheck(Event.class,objects,List.class)) {
+        if (type.equals(Compilation.class) && objects.length == 1) {
                 return (D) Compilation.builder()
                         .id(i)
-                        .events(String.valueOf((List<Integer>) objects[0]))
+                        .events(String.valueOf(objects[0]))
+                        .pinned(true)
+                        .title("Заголовок" + i)
+                        .build();
+        }
+
+        if (type.equals(NewCompilationDto.class) && objects.length == 1) {
+            if (typeCheck(Event.class,objects,List.class)) {
+                return (D) NewCompilationDto.builder()
+                        .events((List<Integer>) objects[0])
                         .pinned(true)
                         .title("Заголовок" + i)
                         .build();
             }
         }
-
 
         return null;
     }

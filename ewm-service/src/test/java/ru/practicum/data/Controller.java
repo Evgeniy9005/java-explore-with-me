@@ -22,6 +22,7 @@ import ru.practicum.compilations.converter.CompilationMapper;
 import ru.practicum.compilations.converter.CompilationMapperImpl;
 import ru.practicum.compilations.dto.CompilationDto;
 import ru.practicum.compilations.dto.NewCompilationDto;
+import ru.practicum.compilations.dto.UpdateCompilationRequest;
 import ru.practicum.compilations.model.Compilation;
 import ru.practicum.constants.State;
 import ru.practicum.events.EventsService;
@@ -113,13 +114,15 @@ public class Controller {
 
     protected List<Compilation> compilationList;
 
-    //protected NewCompilationDto newCompilationDto = new NewCompilationDto("Подборка");
-
     protected List<CompilationDto> compilationDtoList = new ArrayList<>();
 
     protected Map<Integer,CompilationDto> compilationDtoMap;
 
     protected CompilationMapper compilationMapper = new CompilationMapperImpl();
+
+    protected NewCompilationDto newCompilationDto;
+
+    protected UpdateCompilationRequest updateCompilationRequest;
 
     protected List<State> stateList = new ArrayList<>();
 
@@ -166,7 +169,7 @@ public class Controller {
     }
 
     protected void initCompilation(Integer createObjects) {
-        compilationList = generationData(createObjects,Compilation.class,eventIdList);
+        compilationList = generationData(createObjects,Compilation.class,getEventIdList());
         printList(compilationList,"cTc");
 
         compilationDtoMap = compilationList.stream()
@@ -174,9 +177,21 @@ public class Controller {
                 .collect(Collectors.toMap(c -> c.getId(),c -> c));
 
         compilationDtoList.addAll(compilationDtoMap.values());
+
+        newCompilationDto = NewCompilationDto.builder()
+                .events(getEventIdList())
+                .pinned(true)
+                .title("Подборка")
+                .build();
+
+        updateCompilationRequest =UpdateCompilationRequest.builder()
+                .events(getEventIdList())
+                .pinned(true)
+                .title("Обновленная подборка")
+                .build();
     }
 
-    protected String getUsersIdParam() throws Exception {
+    protected String getUsersIdParam() {
         return String.valueOf(userList.stream().map(User::getId)
                 .collect(Collectors.toList()))
                 .replace("[","").replace("]","");

@@ -204,7 +204,6 @@ public class AdminServiceImpl implements AdminService {
         log.info("Создан пользователь {}",user);
         UserDto userDto = userMapper.toUserDto(user);
         log.info("Преобразованный объект пользователя {}",userDto);
-        // log.info("{} отправлена статистика {}",ADMIN,getStatsClient().put(hit(APP,request)));
         return userDto;
     }
 
@@ -213,8 +212,6 @@ public class AdminServiceImpl implements AdminService {
     public void deleteUser(Integer userId, HttpServletRequest request) {
         userRepository.deleteById(userId);
         log.info("Удален пользователь {}",userId);
-      //  log.info("{} отправлена статистика {}",ADMIN,getStatsClient().put(hit(APP,request)));
-
     }
 
 
@@ -226,7 +223,7 @@ public class AdminServiceImpl implements AdminService {
         List<Integer> eventIds = newCompilationDto.getEvents();
         String json = "[]";
 
-        if (eventIds != null) {
+        if (eventIds != null && !eventIds.isEmpty()) {
             eventList = eventsRepository.findAllById(eventIds);
             try {
                 json = objectMapper.writeValueAsString(eventIds);

@@ -12,6 +12,7 @@ import ru.practicum.events.model.Event;
 import ru.practicum.events.model.Location;
 import ru.practicum.users.dto.UpdateEventUserRequest;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -119,10 +120,7 @@ public class Patch {
                 .build();
     }
 
-    public static Object[] patchCompilation(Compilation updated,
-                                                                    UpdateCompilationRequest patch
-
-    ) {
+    public static Object[] patchCompilation(Compilation updated, UpdateCompilationRequest patch) {
         ObjectMapper objectMapper = new ObjectMapper();
         String json;
         List<Integer> eventIds = patch.getEvents();
@@ -136,6 +134,7 @@ public class Patch {
             }
         } else {
             json = updated.getEvents();
+            eventIds = new ArrayList<>();
         }
         String title = patch.getTitle();
         Boolean pinned = patch.getPinned();
