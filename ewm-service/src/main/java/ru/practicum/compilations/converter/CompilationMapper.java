@@ -22,10 +22,4 @@ public interface CompilationMapper {
                 .map(event -> Mappers.getMapper(EventsMapper.class).toEventShortDto(event))
                 .collect(Collectors.toList());
     }
-
-   /* default List<EventShortDto> compilationToEventShortDto(Compilation compilation) {
-        return compilation.getEvents().stream()
-                .map(event -> Mappers.getMapper(EventsMapper.class).toEventShortDto(event))
-                .collect(Collectors.toList());
-    }*/
 }

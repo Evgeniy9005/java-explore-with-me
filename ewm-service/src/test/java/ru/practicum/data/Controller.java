@@ -173,7 +173,8 @@ public class Controller {
         printList(compilationList,"cTc");
 
         compilationDtoMap = compilationList.stream()
-                .map(compilation -> compilationMapper.toCompilationDto(compilation,eventList))
+                .map(compilation -> compilationMapper.toCompilationDto(compilation,
+                        eventList == null ? new ArrayList<>() : eventList))
                 .collect(Collectors.toMap(c -> c.getId(),c -> c));
 
         compilationDtoList.addAll(compilationDtoMap.values());
@@ -239,6 +240,10 @@ public class Controller {
     }
 
     protected List<Integer> getEventIdList() {
+        if(eventList == null) {
+            System.out.println("Пустой список для подборки");
+            return new ArrayList<>();
+        }
         eventIdList = eventList.stream().map(Event::getId).collect(Collectors.toList());
         return eventIdList;
     }
