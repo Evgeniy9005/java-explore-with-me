@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import ru.practicum.category.dao.CategoryRepository;
 import ru.practicum.category.dto.NewCategoryDto;
@@ -19,24 +18,14 @@ import ru.practicum.events.dao.EventsRepository;
 import ru.practicum.events.model.Event;
 import ru.practicum.users.dao.UserRepository;
 import ru.practicum.users.model.User;
-
-import javax.servlet.http.HttpServletRequest;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static net.bytebuddy.matcher.ElementMatchers.any;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 
 @ExtendWith(MockitoExtension.class)
