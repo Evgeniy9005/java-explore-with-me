@@ -65,7 +65,7 @@ public class AdminController {
                                         @RequestParam(defaultValue = "10") int size,
                                         HttpServletRequest request
     ) {
-
+        System.out.println("users = " + users + "states = " + states + "categories = " + categories);
         return adminService.getEvents(users,states,categories,rangeStart,rangeEnd,from,size,request);
     }
 

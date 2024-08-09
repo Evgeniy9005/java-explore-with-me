@@ -155,8 +155,12 @@ class AdminServiceImplTest extends Controller {
 
     @Test
     void upCompilation() {
-        when()
-        adminService.upCompilation(updateCompilationRequest,1,request);
+        when(compilationRepository.findById(1)).thenReturn(Optional.of(compilationList.get(0)));
+        when(eventsRepository.findAllById(getEventIdList())).thenReturn(eventList);
 
+        adminService.upCompilation(updateCompilationRequest,1,request);
+        verify(compilationRepository).findById(1);
+        verify(eventsRepository).findAllById(getEventIdList());
+        verify(compilationRepository).save(any(Compilation.class));
     }
 }
