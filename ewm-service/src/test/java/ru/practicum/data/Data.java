@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import ru.practicum.admin.dto.UpdateEventAdminRequest;
 import ru.practicum.category.dto.CategoryDto;
 import ru.practicum.category.model.Category;
+import ru.practicum.compilations.model.Compilation;
 import ru.practicum.constants.State;
 import ru.practicum.constants.StateAction;
 import ru.practicum.constants.StatusRequest;
@@ -187,6 +188,18 @@ public class Data {
             return (D) new NewUserRequest("email@mail" + i, "User" + i);
         }
 
+        if (type.equals(Compilation.class)) {
+            if (typeCheck(Event.class,objects,List.class)) {
+                return (D) Compilation.builder()
+                        .id(i)
+                        .events(String.valueOf((List<Integer>) objects[0]))
+                        .pinned(true)
+                        .title("Заголовок" + i)
+                        .build();
+            }
+        }
+
+
         return null;
     }
 
@@ -218,19 +231,38 @@ public class Data {
     }
 
     private static boolean typeCheck(Type generated, Object[] objects, Type t1, Type t2) {
-        boolean flag = false;
+
         if (objects.length == 2) {
             if (objects[0].getClass().equals(t1) && objects[1].getClass().equals(t2)) {
                 return true;
             } else {
-                log.info("Входные параметры должен быть t1 = {}, t2 = {} для создания {}!",t1,t2,generated);
+                System.out.println(
+                        String.format("Входные параметры должен быть 2 t1 = %s, t2 = %s для создания %s!",t1,t2,generated));
             return false;
             }
 
         } else {
-                log.info("Входных параметров должен быть 2 t1 = {} и t2 = {} для создания {}!",t1,t2,generated);
+            System.out.println(
+                    String.format("Входные параметры должен быть 2 t1 = %s, t2 = %s для создания %s!",t1,t2,generated));
             return false;
         }
     }
 
+    private static boolean typeCheck(Type generated, Object[] objects, Type t1) {
+
+        if (objects.length == 1) {
+            if (objects[0].getClass().equals(t1)) {
+                return true;
+            } else {
+                System.out.println(
+                        String.format("Входные параметры должен быть 1 t1 = %s для создания %s!",t1,generated));
+                return false;
+            }
+
+        } else {
+            System.out.println(
+                    String.format("Входные параметры должен быть 1 t1 = %s для создания %s!",t1,generated));
+            return false;
+        }
+    }
 }

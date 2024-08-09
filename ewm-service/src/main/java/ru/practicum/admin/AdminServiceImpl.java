@@ -98,15 +98,11 @@ public class AdminServiceImpl implements AdminService {
     /*Изменение категории*/
     @Override
     public CategoryDto upCategory(CategoryDto categoryDto, Integer catId, HttpServletRequest request) {
-        // log.info("{} отправлена статистика {}",ADMIN,getStatsClient().put(hit(APP,request)));
+
         Category upCategory;
         Category category = Category.builder().id(catId).name(categoryDto.getName()).build();
 
-       // try {
-            upCategory = categoryRepository.save(category);
-       /* } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("Попытка изменения имени # категории на уже существующее!",category.getName());
-        }*/
+        upCategory = categoryRepository.save(category);
 
         CategoryDto newCategoryDto = categoryMapper.toCategoryDto(upCategory);
 
@@ -132,10 +128,7 @@ public class AdminServiceImpl implements AdminService {
                 "states = {}, categories = {}, rangeStart = {}, " +
                 "rangeEnd = {}, from = {}, size = {}",users,states,categories,rangeStart,rangeEnd,from,size);
 
-        // log.info("{} отправлена статистика {}",ADMIN,getStatsClient().put(hit(APP,request)));
-
         Sort sort = Sort.by(Sort.Direction.ASC,"id");
-
 
             events = eventsRepository.getEvents(users,
                     states,
@@ -144,7 +137,6 @@ public class AdminServiceImpl implements AdminService {
                     Util.getDateEnd(rangeEnd),
                     Util.page(from,size,sort)
             );
-
 
         log.info("Полученные события в количестве {}:",events.size());
         List<EventFullDto> eventFullDtos = events.stream()

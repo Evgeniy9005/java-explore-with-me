@@ -21,7 +21,9 @@ import ru.practicum.client.StatsClient;
 import ru.practicum.compilations.converter.CompilationMapper;
 import ru.practicum.compilations.converter.CompilationMapperImpl;
 import ru.practicum.compilations.dto.CompilationDto;
+import ru.practicum.compilations.dto.NewCompilationDto;
 import ru.practicum.compilations.model.Compilation;
+import ru.practicum.constants.State;
 import ru.practicum.events.EventsService;
 import ru.practicum.events.coverter.EventsMapper;
 import ru.practicum.events.coverter.EventsMapperImpl;
@@ -34,8 +36,11 @@ import ru.practicum.users.converter.UserMapperImpl;
 import ru.practicum.users.dto.UserDto;
 import ru.practicum.users.model.User;
 import ru.practicum.users.request.NewUserRequest;
+import ru.practicum.util.Util;
 
+import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -58,16 +63,19 @@ public class Controller {
     @MockBean
     protected EventsService eventsService;
 
-    @MockBean
-    protected AdminService adminService;
 
     @Mock
     protected StatsClient statsClient;
+
+    @Mock
+    protected HttpServletRequest request;
 
     @Autowired
     protected MockMvc mvc;
 
     protected List<Category> categoryList;
+
+    private List<Integer> categoryIdList;
 
     protected List<CategoryDto> categoryDtoList = new ArrayList<>();
 
@@ -76,6 +84,8 @@ public class Controller {
     protected CategoryMapper categoryMapper = new CategoryMapperImpl();
 
     protected List<User> userList;
+
+    private List<Integer> userIdList;
 
     protected List<UserDto> userDtoList = new ArrayList<>();
 
@@ -86,6 +96,8 @@ public class Controller {
     protected UserMapper userMapper = new UserMapperImpl();
 
     protected List<Event> eventList;
+
+    protected List<Integer> eventIdList;
 
     protected List<EventFullDto> eventFullDtoList = new ArrayList<>();
 
@@ -101,11 +113,15 @@ public class Controller {
 
     protected List<Compilation> compilationList;
 
+    //protected NewCompilationDto newCompilationDto = new NewCompilationDto("Подборка");
+
     protected List<CompilationDto> compilationDtoList = new ArrayList<>();
 
     protected Map<Integer,CompilationDto> compilationDtoMap;
 
     protected CompilationMapper compilationMapper = new CompilationMapperImpl();
+
+    protected List<State> stateList = new ArrayList<>();
 
     protected void initCategory(Integer createObjects) {
         categoryList = generationData(createObjects,Category.class);
@@ -149,6 +165,17 @@ public class Controller {
         updateEventAdminRequestList = generationData(createObjects,UpdateEventAdminRequest.class);
     }
 
+    protected void initCompilation(Integer createObjects) {
+        compilationList = generationData(createObjects,Compilation.class,eventIdList);
+        printList(compilationList,"cTc");
+
+        compilationDtoMap = compilationList.stream()
+                .map(compilation -> compilationMapper.toCompilationDto(compilation,eventList))
+                .collect(Collectors.toMap(c -> c.getId(),c -> c));
+
+        compilationDtoList.addAll(compilationDtoMap.values());
+    }
+
     protected String getUsersIdParam() throws Exception {
         return String.valueOf(userList.stream().map(User::getId)
                 .collect(Collectors.toList()))
@@ -179,5 +206,33 @@ public class Controller {
         return (RequestPostProcessor) request;
     }
 
+    protected List<Integer> getUserIdList() {
+        userIdList = userList.stream().map(User::getId).collect(Collectors.toList());
+        return userIdList;
+    }
 
+    protected List<Integer> getCategoryIdList() {
+        categoryIdList = categoryList.stream().map(Category::getId).collect(Collectors.toList());
+    return categoryIdList;
+    }
+
+    protected List<State> getStateList() {
+        stateList.add(State.PENDING);
+        stateList.add(State.PUBLISHED);
+        stateList.add(State.CANCELED);
+        return stateList;
+    }
+
+    protected List<Integer> getEventIdList() {
+        eventIdList = eventList.stream().map(Event::getId).collect(Collectors.toList());
+        return eventIdList;
+    }
+
+    protected String getStart() {
+        return LocalDateTime.now().format(Util.getFormatter());
+    }
+
+    protected String getEnd() {
+        return LocalDateTime.now().plusMonths(1).format(Util.getFormatter());
+    }
 }
