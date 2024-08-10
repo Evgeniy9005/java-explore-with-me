@@ -6,15 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Pageable;
 import ru.practicum.compilations.dao.CompilationRepository;
 import ru.practicum.data.Controller;
 import ru.practicum.events.dao.EventsRepository;
-import ru.practicum.util.Util;
-
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
