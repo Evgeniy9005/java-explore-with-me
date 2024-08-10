@@ -125,9 +125,9 @@ public class Controller {
 
     protected List<ParticipationRequestDto> participationRequestDtoList = new ArrayList<>();
 
-    List<ParticipationRequestDto> prDtoConfirmedList;
+    protected List<ParticipationRequestDto> prDtoConfirmedList;
 
-    List<ParticipationRequestDto> prDtoRejectedList;
+    protected List<ParticipationRequestDto> prDtoRejectedList;
 
     protected Map<Integer,ParticipationRequestDto> participationRequestDtoMap;
 
