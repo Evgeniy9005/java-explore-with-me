@@ -30,6 +30,7 @@ import ru.practicum.events.coverter.EventsMapper;
 import ru.practicum.events.coverter.EventsMapperImpl;
 import ru.practicum.events.dto.EventFullDto;
 import ru.practicum.events.dto.EventShortDto;
+import ru.practicum.events.dto.NewEventDto;
 import ru.practicum.events.model.Event;
 import ru.practicum.stats.Stats;
 import ru.practicum.users.converter.UserMapper;
@@ -60,10 +61,6 @@ public class Controller {
 
     @Autowired
     protected ObjectMapper objectMapper;
-
-    @MockBean
-    protected EventsService eventsService;
-
 
     @Mock
     protected StatsClient statsClient;
@@ -99,6 +96,8 @@ public class Controller {
     protected List<Event> eventList;
 
     protected List<Integer> eventIdList;
+
+    protected NewEventDto newEventDto;
 
     protected List<EventFullDto> eventFullDtoList = new ArrayList<>();
 
@@ -166,6 +165,19 @@ public class Controller {
         eventShortDtoList.addAll(eventShortDtoMap.values());
 
         updateEventAdminRequestList = generationData(createObjects,UpdateEventAdminRequest.class);
+
+        EventFullDto e = eventFullDtoMap.get(1);
+        newEventDto = NewEventDto.builder()
+                .annotation(e.getAnnotation())
+                .description(e.getDescription())
+                .category(e.getCategory().getId())
+                .location(e.getLocation())
+                .paid(e.getPaid())
+                .requestModeration(e.getRequestModeration())
+                .participantLimit(e.getParticipantLimit())
+                .eventDate(e.getEventDate())
+                .title(e.getTitle())
+                .build();
     }
 
     protected void initCompilation(Integer createObjects) {

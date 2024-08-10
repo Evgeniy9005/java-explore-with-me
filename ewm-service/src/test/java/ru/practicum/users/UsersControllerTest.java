@@ -1,15 +1,17 @@
 package ru.practicum.users;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.practicum.admin.AdminController;
 import ru.practicum.client.StatsClient;
-import ru.practicum.stats.Stats;
+import ru.practicum.data.Controller;
 import ru.practicum.users.dto.UserDto;
 import java.nio.charset.StandardCharsets;
 
@@ -20,36 +22,71 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class UsersControllerTest {
-    @Autowired
-    private ObjectMapper objectMapper;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-    @Mock
-    private StatsClient statsClient;
+@WebMvcTest(controllers = UsersController.class)
+class UsersControllerTest extends Controller {
 
-    @Autowired
-    private MockMvc mvc;
+    @MockBean
+    private UserService userService;
+
+    @BeforeEach
+    void setUp() {
+        initUser(5);
+        initCategory(2);
+        initEventWithParam(3);
+    }
+
+
 
     @Test
-    void addNewUser() {
-        try (MockedStatic<Stats> theMock = Mockito.mockStatic(Stats.class)) {
-            theMock.when(Stats::getStatsClient).thenReturn(statsClient);
+    void getEventsAddedCurrentUser() {
+    }
 
-            when(statsClient.put(any())).thenReturn("Ответ");
-            mvc.perform(get("/admin/users")
-                            .with(request -> {
-                                request.setRemoteAddr("192.168.0.1");
-                                return request;
-                            })
-                            .content(objectMapper.writeValueAsString(new UserDto(1,"name","e")))
-                            .characterEncoding(StandardCharsets.UTF_8)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .accept(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isOk());
-            verify(statsClient).get(any(),any());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    @Test
+    void addEventUser() throws Exception {
+        when(userService.addEventUser(any(),anyInt(),any())).thenReturn(eventFullDtoMap.get(1));
+        mvc.perform(post("/users/1/events")
+                        .content(objectMapper.writeValueAsString(newEventDto))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isCreated());
+        verify(userService).addEventUser(any(),anyInt(),any());
+    }
+
+    @Test
+    void getFullInfoAboutEventAddedByCurrentUser() throws Exception {
+    }
+
+    @Test
+    void upEventAddedByCurrentUser() throws Exception {
+    }
+
+    @Test
+    void getInformationRequestsToParticipateCurrentUserEvent() throws Exception {
+    }
+
+    @Test
+    void upStatusApplicationsParticipationEventCurrentUser() throws Exception {
+
+    }
+
+    @Test
+    void getInfoCurrentUserRequestsParticipateOtherPeopleEvents() throws Exception {
+    }
+
+    @Test
+    void addRequestCurrentUserParticipateEvent() throws Exception {
+    }
+
+    @Test
+    void upEventToParticipateCancel() throws Exception {
     }
 }
