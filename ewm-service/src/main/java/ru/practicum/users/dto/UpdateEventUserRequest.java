@@ -1,5 +1,6 @@
 package ru.practicum.users.dto;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import ru.practicum.annotations.DoDateArrived;
@@ -13,6 +14,7 @@ import javax.validation.constraints.*;
 - значит изменение этих данных не требуется.*/
 @Data
 @RequiredArgsConstructor
+@Builder(toBuilder = true)
 public class UpdateEventUserRequest {
     /**Новая аннотация*/
     @DoHeBlank(message = "Аннотация не должна быть пустая!")

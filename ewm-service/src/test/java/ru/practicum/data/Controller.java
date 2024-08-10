@@ -25,6 +25,7 @@ import ru.practicum.compilations.dto.NewCompilationDto;
 import ru.practicum.compilations.dto.UpdateCompilationRequest;
 import ru.practicum.compilations.model.Compilation;
 import ru.practicum.constants.State;
+import ru.practicum.constants.StatusRequest;
 import ru.practicum.events.EventsService;
 import ru.practicum.events.coverter.EventsMapper;
 import ru.practicum.events.coverter.EventsMapperImpl;
@@ -35,9 +36,16 @@ import ru.practicum.events.model.Event;
 import ru.practicum.stats.Stats;
 import ru.practicum.users.converter.UserMapper;
 import ru.practicum.users.converter.UserMapperImpl;
+import ru.practicum.users.dto.UpdateEventUserRequest;
 import ru.practicum.users.dto.UserDto;
 import ru.practicum.users.model.User;
+import ru.practicum.users.request.EventRequestStatusUpdateRequest;
+import ru.practicum.users.request.EventRequestStatusUpdateResult;
 import ru.practicum.users.request.NewUserRequest;
+import ru.practicum.users.request.converter.RequestMapper;
+import ru.practicum.users.request.converter.RequestMapperImpl;
+import ru.practicum.users.request.dto.ParticipationRequestDto;
+import ru.practicum.users.request.model.ParticipationRequest;
 import ru.practicum.util.Util;
 
 import javax.servlet.http.HttpServletRequest;
@@ -111,6 +119,24 @@ public class Controller {
 
     protected List<UpdateEventAdminRequest> updateEventAdminRequestList;
 
+    protected UpdateEventUserRequest updateEventUserRequest;
+
+    protected List<ParticipationRequest> participationRequestList;
+
+    protected List<ParticipationRequestDto> participationRequestDtoList = new ArrayList<>();
+
+    List<ParticipationRequestDto> prDtoConfirmedList;
+
+    List<ParticipationRequestDto> prDtoRejectedList;
+
+    protected Map<Integer,ParticipationRequestDto> participationRequestDtoMap;
+
+    protected RequestMapper requestMapper = new RequestMapperImpl();
+
+    protected EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest;
+
+    protected EventRequestStatusUpdateResult eventRequestStatusUpdateResult;
+
     protected List<Compilation> compilationList;
 
     protected List<CompilationDto> compilationDtoList = new ArrayList<>();
@@ -178,6 +204,45 @@ public class Controller {
                 .eventDate(e.getEventDate())
                 .title(e.getTitle())
                 .build();
+
+        updateEventUserRequest = UpdateEventUserRequest.builder()
+                .annotation(e.getAnnotation())
+                .description(e.getDescription())
+                .category(e.getCategory().getId())
+                .location(e.getLocation())
+                .paid(e.getPaid())
+                .requestModeration(e.getRequestModeration())
+                .participantLimit(e.getParticipantLimit())
+                .eventDate(e.getEventDate())
+                .title(e.getTitle())
+                .stateAction("PUBLISH_EVENT")
+                .build();
+    }
+
+    protected void initParticipationRequest(Integer createObjects) {
+        participationRequestList = generationData(createObjects,
+                ParticipationRequest.class,
+                eventList.get(0),
+                userList.get(0));
+        printList(participationRequestList);
+
+        participationRequestDtoMap = participationRequestList.stream()
+                .map(pr -> requestMapper.toDto(pr))
+                .collect(Collectors.toMap(ParticipationRequestDto::getId,pr -> pr));
+
+        participationRequestDtoList.addAll(participationRequestDtoMap.values());
+
+        prDtoConfirmedList = participationRequestDtoList.stream()
+                .map(pr -> pr.toBuilder().status(StatusRequest.CONFIRMED.toString()).build())
+                .collect(Collectors.toList());
+
+        prDtoRejectedList = participationRequestDtoList.stream()
+                .map(pr -> pr.toBuilder().status(StatusRequest.REJECTED.toString()).build())
+                .collect(Collectors.toList());
+
+        eventRequestStatusUpdateRequest = new EventRequestStatusUpdateRequest(getEventIdList(),StatusRequest.CONFIRMED);
+
+        eventRequestStatusUpdateResult = new EventRequestStatusUpdateResult(prDtoConfirmedList,new ArrayList<>());
     }
 
     protected void initCompilation(Integer createObjects) {

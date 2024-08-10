@@ -66,9 +66,10 @@ public class UsersController {
     }
 
     @GetMapping("/users/{userId}/events/{eventId}/requests") //Получение информации о запросах на участие в событии текущего пользователя
-    public List<ParticipationRequestDto> getInformationRequestsToParticipateCurrentUserEvent(@PathVariable int userId,
-                                                                                       @PathVariable int eventId,
-                                                                                       HttpServletRequest request
+    public List<ParticipationRequestDto> getInformationRequestsToParticipateCurrentUserEvent(
+            @PathVariable @Positive int userId,
+            @PathVariable @Positive int eventId,
+            HttpServletRequest request
     ) {
         return userService.getInformationRequestsToParticipateCurrentUserEvent(userId,eventId,request);
     }

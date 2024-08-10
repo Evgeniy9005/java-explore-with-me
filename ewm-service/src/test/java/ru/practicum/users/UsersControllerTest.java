@@ -40,12 +40,23 @@ class UsersControllerTest extends Controller {
         initUser(5);
         initCategory(2);
         initEventWithParam(3);
+        initParticipationRequest(3);
     }
 
 
 
     @Test
-    void getEventsAddedCurrentUser() {
+    void getEventsAddedCurrentUser() throws Exception {
+        when(userService.getEventsAddedCurrentUser(anyInt(),anyInt(),anyInt(),any())).thenReturn(eventShortDtoList);
+        mvc.perform(get("/users/1/events")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .param("from","0")
+                        .param("size","10"))
+                .andDo(print())
+                .andExpect(status().isOk());
+        verify(userService).getEventsAddedCurrentUser(anyInt(),anyInt(),anyInt(),any());
     }
 
     @Test
@@ -63,23 +74,69 @@ class UsersControllerTest extends Controller {
 
     @Test
     void getFullInfoAboutEventAddedByCurrentUser() throws Exception {
+        when(userService.getFullInfoAboutEventAddedByCurrentUser(anyInt(),anyInt(),any()))
+                .thenReturn(eventFullDtoMap.get(1));
+        mvc.perform(get("/users/1/events/1")
+                        .content(objectMapper.writeValueAsString(newEventDto))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+        verify(userService).getFullInfoAboutEventAddedByCurrentUser(anyInt(),anyInt(),any());
     }
 
     @Test
     void upEventAddedByCurrentUser() throws Exception {
+        when(userService.upEventAddedByCurrentUser(any(),anyInt(),anyInt(),any())).thenReturn(eventFullDtoMap.get(1));
+        mvc.perform(patch("/users/1/events/1")
+                        .content(objectMapper.writeValueAsString(updateEventUserRequest))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+        verify(userService).upEventAddedByCurrentUser(any(),anyInt(),anyInt(),any());
     }
 
     @Test
     void getInformationRequestsToParticipateCurrentUserEvent() throws Exception {
+        when(userService.getInformationRequestsToParticipateCurrentUserEvent(anyInt(),anyInt(),any()))
+                .thenReturn(participationRequestDtoList);
+        mvc.perform(get("/users/1/events/1/requests")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+        verify(userService).getInformationRequestsToParticipateCurrentUserEvent(anyInt(),anyInt(),any());
     }
 
     @Test
     void upStatusApplicationsParticipationEventCurrentUser() throws Exception {
-
+        when(userService.upStatusApplicationsParticipationEventCurrentUser(any(),anyInt(),anyInt(),any()))
+                .thenReturn(eventRequestStatusUpdateResult);
+        mvc.perform(patch("/users/1/events/1/requests")
+                        .content(objectMapper.writeValueAsString(eventRequestStatusUpdateRequest))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+        verify(userService).upStatusApplicationsParticipationEventCurrentUser(any(),anyInt(),anyInt(),any());
     }
 
     @Test
     void getInfoCurrentUserRequestsParticipateOtherPeopleEvents() throws Exception {
+        when(userService.getInfoCurrentUserRequestsParticipateOtherPeopleEvents(anyInt(),any()))
+                .thenReturn(participationRequestDtoList);
+        mvc.perform(get("/users/1/requests")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+        verify(userService).getInfoCurrentUserRequestsParticipateOtherPeopleEvents(anyInt(),any());
     }
 
     @Test

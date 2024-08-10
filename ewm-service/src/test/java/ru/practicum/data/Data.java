@@ -157,6 +157,7 @@ public class Data {
         if (type.equals(ParticipationRequest.class)) {
             if (typeCheck(ParticipationRequest.class,objects,Event.class,User.class)) {
                 return (D) ParticipationRequest.builder()
+                        .id(i)
                         .event((Event) objects[0])
                         .created(LocalDateTime.now())
                         .requester((User) objects[1])
