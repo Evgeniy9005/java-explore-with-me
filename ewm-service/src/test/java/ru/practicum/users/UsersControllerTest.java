@@ -141,9 +141,28 @@ class UsersControllerTest extends Controller {
 
     @Test
     void addRequestCurrentUserParticipateEvent() throws Exception {
+        when(userService.addRequestCurrentUserParticipateEvent(anyInt(),anyInt(),any()))
+                .thenReturn(participationRequestDtoMap.get(1));
+        mvc.perform(post("/users/1/requests")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .param("eventId","1"))
+                .andDo(print())
+                .andExpect(status().isCreated());
+        verify(userService).addRequestCurrentUserParticipateEvent(anyInt(),anyInt(),any());
     }
 
     @Test
     void upEventToParticipateCancel() throws Exception {
+        when(userService.upEventToParticipateCancel(anyInt(),anyInt(),any()))
+                .thenReturn(participationRequestDtoMap.get(1).toBuilder().status("CANCELED").build());
+        mvc.perform(patch("/users/1/requests/1/cancel")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+        verify(userService).upEventToParticipateCancel(anyInt(),anyInt(),any());
     }
 }
