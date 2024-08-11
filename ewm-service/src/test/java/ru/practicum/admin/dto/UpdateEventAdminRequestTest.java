@@ -18,7 +18,7 @@ class UpdateEventAdminRequestTest {
     @Test
     void notNullGetAnnotation() {
         assertNotNull(updateEventAdminRequest);
-        assertEquals("Краткое описание 1",updateEventAdminRequest.getAnnotation());
+        assertEquals("Краткое описание, аннотация 1",updateEventAdminRequest.getAnnotation());
     }
 
     @Test

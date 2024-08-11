@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CategoryTest {
 
     private Category category;
+
     @BeforeEach
     void setUp() {
         category = Data.<Category>generationData(1,Category.class).get(0);

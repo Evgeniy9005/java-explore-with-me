@@ -2,20 +2,14 @@ package ru.practicum.data;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
-import ru.practicum.admin.AdminService;
 import ru.practicum.admin.dto.UpdateEventAdminRequest;
 import ru.practicum.category.converter.CategoryMapper;
 import ru.practicum.category.converter.CategoryMapperImpl;
 import ru.practicum.category.dto.CategoryDto;
-import ru.practicum.category.dto.NewCategoryDto;
 import ru.practicum.category.model.Category;
 import ru.practicum.client.StatsClient;
 import ru.practicum.compilations.converter.CompilationMapper;
@@ -26,14 +20,12 @@ import ru.practicum.compilations.dto.UpdateCompilationRequest;
 import ru.practicum.compilations.model.Compilation;
 import ru.practicum.constants.State;
 import ru.practicum.constants.StatusRequest;
-import ru.practicum.events.EventsService;
 import ru.practicum.events.coverter.EventsMapper;
 import ru.practicum.events.coverter.EventsMapperImpl;
 import ru.practicum.events.dto.EventFullDto;
 import ru.practicum.events.dto.EventShortDto;
 import ru.practicum.events.dto.NewEventDto;
 import ru.practicum.events.model.Event;
-import ru.practicum.stats.Stats;
 import ru.practicum.users.converter.UserMapper;
 import ru.practicum.users.converter.UserMapperImpl;
 import ru.practicum.users.dto.UpdateEventUserRequest;
@@ -47,21 +39,14 @@ import ru.practicum.users.request.converter.RequestMapperImpl;
 import ru.practicum.users.request.dto.ParticipationRequestDto;
 import ru.practicum.users.request.model.ParticipationRequest;
 import ru.practicum.util.Util;
-
 import javax.servlet.http.HttpServletRequest;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import static ru.practicum.data.Data.generationData;
 import static ru.practicum.data.Data.printList;
 
@@ -262,7 +247,7 @@ public class Controller {
                 .title("Подборка")
                 .build();
 
-        updateCompilationRequest =UpdateCompilationRequest.builder()
+        updateCompilationRequest = UpdateCompilationRequest.builder()
                 .events(getEventIdList())
                 .pinned(true)
                 .title("Обновленная подборка")
@@ -317,7 +302,7 @@ public class Controller {
     }
 
     protected List<Integer> getEventIdList() {
-        if(eventList == null) {
+        if (eventList == null) {
             System.out.println("Пустой список для подборки");
             return new ArrayList<>();
         }

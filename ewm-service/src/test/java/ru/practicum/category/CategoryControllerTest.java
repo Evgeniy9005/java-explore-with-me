@@ -22,7 +22,7 @@ class CategoryControllerTest extends Controller {
     private CategoryService categoryService;
 
     @BeforeEach
-    void start () {
+    void start() {
     initCategory(3);
     }
 
