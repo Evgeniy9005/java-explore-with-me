@@ -33,8 +33,4 @@ public class StatsController {
     ) {
         return service.getStats(start,end,uris,unique);
     }
-
-   /* private String defaultDateTime(){
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }*/
 }
