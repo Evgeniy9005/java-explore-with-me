@@ -43,6 +43,7 @@ public class Data {
      <p><b>- NewCompilationDto</b> c параметром objects List(Integer);</p>
      <p><b>- Compilation</b> c параметром objects List(Integer);</p>
      <p><b>- NewUserRequest</b> баз параметров objects;</p>
+     <p><b>- User</b> баз параметров objects;</p>
      <p><b>- Category</b> баз параметров objects;</p>
      <p><b>- EventShortDto</b> баз параметров objects;</p>
      <p><b>- EventFullDto</b> баз параметров objects;</p>
