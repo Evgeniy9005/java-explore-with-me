@@ -19,33 +19,45 @@ class CompilationTest {
 
     @Test
     void getId() {
+        assertNotNull(compilation.getId());
     }
 
     @Test
     void getEvents() {
+        assertEquals("[1, 2]",compilation.getEvents());
     }
 
     @Test
     void isPinned() {
+        assertTrue(compilation.isPinned());
     }
 
     @Test
     void getTitle() {
+        assertNotNull(compilation.getTitle());
     }
 
     @Test
     void setId() {
+        compilation.setId(2);
+        assertEquals(2,compilation.getId());
     }
 
     @Test
     void setEvents() {
+        compilation.setEvents(String.valueOf(List.of(1)));
+        assertEquals("[1]",compilation.getEvents());
     }
 
     @Test
     void setPinned() {
+        compilation.setId(2);
+        assertEquals(2,compilation.getId());
     }
 
     @Test
     void setTitle() {
+        compilation.setId(2);
+        assertEquals(2,compilation.getId());
     }
 }
