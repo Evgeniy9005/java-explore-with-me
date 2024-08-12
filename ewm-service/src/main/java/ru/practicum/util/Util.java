@@ -5,15 +5,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import ru.practicum.BadRequestException;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class Util {
@@ -70,12 +63,12 @@ public class Util {
         }
     }
 
-    public static <T> List<T> getElementsFrom(List<T> list, int start) {
+   /* public static <T> List<T> getElementsFrom(List<T> list, int start) {
 
         return list.stream().skip(start).collect(Collectors.toList());
-    }
+    }*/
 
-    public static List<Integer> getNumbers(String arrayString) {
+    /*public static List<Integer> getNumbers(String arrayString) {
         if (arrayString == null) {
             throw new BadRequestException(
                     "Не верно заданы входные параметры #, " +
@@ -96,7 +89,7 @@ public class Util {
         log.info("Сформированный массив из строки - {}",list);
         return list;
 
-    }
+    }*/
 
     public static DateTimeFormatter getFormatter() {
         return formatter;
@@ -128,7 +121,7 @@ public class Util {
     }
 
 
-    public static String encodeValue(String value) {
+   /* public static String encodeValue(String value) {
         String result = "";
         try {
             URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
@@ -136,6 +129,6 @@ public class Util {
             log.debug("Ошибка расшифровки данных {}",value);
         }
         return result;
-    }
+    }*/
 
 }

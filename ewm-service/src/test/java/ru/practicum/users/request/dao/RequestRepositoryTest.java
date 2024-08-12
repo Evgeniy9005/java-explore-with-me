@@ -16,18 +16,13 @@ import ru.practicum.users.model.User;
 import ru.practicum.users.request.model.ParticipationRequest;
 import jakarta.persistence.EntityManager;
 import java.util.List;
+
 import static ru.practicum.data.Data.generationData;
 import static ru.practicum.data.Data.printList;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class RequestRepositoryTest {
-
-    /*@Autowired
-    private UserService userService;
-
-    @Autowired
-    private AdminService adminService;*/
 
     @Autowired
     private UserRepository userRepository;
@@ -116,28 +111,11 @@ class RequestRepositoryTest {
 
     @Test
     void findByRequesterId() {
+        assertNotNull(requestRepository.findByRequesterId(1));
     }
 
     @Test
     void findByEventInitiatorIdAndEventId() {
+        assertNotNull(requestRepository.findByEventInitiatorIdAndEventId(1,1));
     }
-
-    @Test
-    void numberParticipants() {
-    }
-
-   /* @Test
-    void numberEventsAndNumberParticipants() {
-
-        assertEquals(pr1.getEvent(),saveEventList.get(0));
-        assertEquals(pr2.getEvent(),saveEventList.get(0));
-        assertEquals(pr1.getRequester(),saveUserList.get(0));
-
-        EventIdAndParticipantId ep = requestRepository
-                .numberEventsAndNumberParticipants(1, StatusRequest.CONFIRMED);
-        System.out.println(ep);
-        assertNotNull(ep);
-        assertEquals(ep.getEventId(),1);
-        assertEquals(ep.getCountParticipant(),2);
-    }*/
 }

@@ -17,5 +17,4 @@ class CategoryDtoTest {
     void getName() {
         assertEquals("Категория",categoryDto.getName());
     }
-
 }
