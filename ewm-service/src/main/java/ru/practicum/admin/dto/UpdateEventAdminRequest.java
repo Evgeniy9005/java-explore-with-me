@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import ru.practicum.annotations.DoDateArrived;
 import ru.practicum.events.model.Location;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 
 @Data

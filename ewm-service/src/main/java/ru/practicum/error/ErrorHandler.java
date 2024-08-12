@@ -10,7 +10,7 @@ import ru.practicum.BadRequestException;
 import ru.practicum.ConflictException;
 import ru.practicum.NotFoundException;
 import ru.practicum.util.Util;
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 
 @Slf4j

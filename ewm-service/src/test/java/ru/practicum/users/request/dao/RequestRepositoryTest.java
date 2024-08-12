@@ -14,7 +14,7 @@ import ru.practicum.events.model.Event;
 import ru.practicum.users.dao.UserRepository;
 import ru.practicum.users.model.User;
 import ru.practicum.users.request.model.ParticipationRequest;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import java.util.List;
 import static ru.practicum.data.Data.generationData;
 import static ru.practicum.data.Data.printList;

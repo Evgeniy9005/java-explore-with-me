@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.category.dto.CategoryDto;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Positive;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 
 

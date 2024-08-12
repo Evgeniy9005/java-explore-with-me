@@ -33,7 +33,7 @@ import ru.practicum.users.dto.UserDto;
 import ru.practicum.users.model.User;
 import ru.practicum.util.Patch;
 import ru.practicum.util.Util;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -13,9 +13,9 @@ import ru.practicum.users.request.EventRequestStatusUpdateResult;
 import ru.practicum.users.request.dto.ParticipationRequestDto;
 import ru.practicum.users.dto.UpdateEventUserRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.validation.constraints.Positive;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 
 import java.util.List;
 
@@ -76,6 +76,16 @@ public class UsersController {
 
     @PatchMapping("/users/{userId}/events/{eventId}/requests") //Изменение статуса (подтверждена, отменена) заявок на участие в событии текущего пользователя
     public EventRequestStatusUpdateResult upStatusApplicationsParticipationEventCurrentUser(
+            @RequestBody @Valid EventRequestStatusUpdateRequest updateRequest,
+            @PathVariable @Positive int userId,
+            @PathVariable @Positive int eventId,
+            HttpServletRequest request
+    ) {
+        return userService.upStatusApplicationsParticipationEventCurrentUser(updateRequest,userId,eventId,request);
+    }
+
+    @PatchMapping("/users/{userId}/events/{eventId}/requests/") //Изменение статуса (подтверждена, отменена) заявок на участие в событии текущего пользователя
+    public EventRequestStatusUpdateResult upStatusApplicationsParticipationEventCurrentUser1(
             @RequestBody @Valid EventRequestStatusUpdateRequest updateRequest,
             @PathVariable @Positive int userId,
             @PathVariable @Positive int eventId,

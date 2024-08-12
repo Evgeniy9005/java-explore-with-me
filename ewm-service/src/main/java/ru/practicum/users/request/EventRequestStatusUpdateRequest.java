@@ -4,7 +4,7 @@ package ru.practicum.users.request;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import ru.practicum.constants.StatusRequest;
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**Изменение статуса запроса на участие в событии текущего пользователя*/

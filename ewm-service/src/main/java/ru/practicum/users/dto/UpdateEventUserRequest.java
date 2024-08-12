@@ -7,7 +7,7 @@ import ru.practicum.annotations.DoDateArrived;
 import ru.practicum.annotations.DoHeBlank;
 import ru.practicum.events.model.Location;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 
 
 /**Данные для изменения информации о событии. Если поле в запросе не указано (равно null)

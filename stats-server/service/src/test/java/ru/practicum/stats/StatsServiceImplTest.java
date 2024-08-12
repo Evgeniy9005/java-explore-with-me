@@ -68,7 +68,7 @@ class StatsServiceImplTest {
                 .app("app")
                 .uri("/uri")
                 .ip("198.168.0.1")
-                .timestamp(time)
+               // .timestamp(time)
                 .build();
 
         endpointHitDto = EndpointHitDto.builder()

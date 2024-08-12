@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import ru.practicum.annotations.DoDateArrived;
 import ru.practicum.events.model.Location;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 
 @Data
 @Builder(toBuilder = true)

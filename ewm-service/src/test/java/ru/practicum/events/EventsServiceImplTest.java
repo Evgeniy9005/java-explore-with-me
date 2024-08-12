@@ -9,12 +9,10 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Pageable;
 import ru.practicum.constants.SortEvents;
 import ru.practicum.data.Controller;
 import ru.practicum.events.dao.EventsRepository;
 import ru.practicum.stats.Stats;
-import java.time.LocalDateTime;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
@@ -54,13 +52,8 @@ class EventsServiceImplTest extends Controller {
                     10,
                     request);
 
-            verify(eventsRepository).getEvents(anyList(),
-                    anyList(),
-                    anyList(),
-                    any(LocalDateTime.class),
-                    any(LocalDateTime.class),
-                    any(Pageable.class));
-            verify(statsClient).get(any(),any());
+            verify(eventsRepository).searchE(any(),any(),anyInt(),anyInt());
+            verify(statsClient).put(any());
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -77,7 +70,7 @@ class EventsServiceImplTest extends Controller {
             eventsService.getEvent(1, request);
 
             verify(eventsRepository).findById(anyInt());
-            verify(statsClient).get(any(),any());
+            verify(statsClient).put(any());
         } catch (Exception e) {
             System.out.println(e);
         }

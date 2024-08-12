@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,12 +15,10 @@ import ru.practicum.events.dto.EventFullDto;
 import ru.practicum.events.dto.EventShortDto;
 import ru.practicum.events.dto.NewEventDto;
 import ru.practicum.events.model.Location;
-import ru.practicum.stats.Stats;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -70,11 +66,7 @@ class EventsControllerTest {
     }
 
     @Test
-    void getEvents() {
-        try (MockedStatic<Stats> theMock = Mockito.mockStatic(Stats.class)) {
-            theMock.when(Stats::getStatsClient).thenReturn(statsClient);
-
-            when(statsClient.put(any())).thenReturn("Ответ");
+    void getEvents() throws Exception {
             mvc.perform(get("/events")
                             .with(request -> {
                                 request.setRemoteAddr("192.168.0.1");
@@ -90,21 +82,13 @@ class EventsControllerTest {
                             .param("rangeStart","2024-11-30 15:10:05")
                             .param("rangeEnd","2024-12-31 15:10:05")
                             .param("onlyAvailable","true")
-                            .param("sort","desc"))
+                            .param("sort","EVENT_DATE"))
                     .andDo(print())
                     .andExpect(status().isOk());
-            verify(statsClient).get(any(),any());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 
     @Test
-    void getEvent() {
-
-        try (MockedStatic<Stats> theMock = Mockito.mockStatic(Stats.class)) {
-            theMock.when(Stats::getStatsClient).thenReturn(statsClient);
-
+    void getEvent() throws Exception {
             when(statsClient.put(any())).thenReturn("Ответ");
             mvc.perform(get("/events/1")
                             .with(request -> {
@@ -117,78 +101,5 @@ class EventsControllerTest {
                             .accept(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk());
-            verify(statsClient).get(any(),any());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
-
-    /*@Test
-    void addEventUser() {
-        try (MockedStatic<Stats> theMock = Mockito.mockStatic(Stats.class)) {
-            theMock.when(Stats::getStatsClient).thenReturn(statsClient);
-
-            when(statsClient.put(any())).thenReturn("Ответ");
-            mvc.perform(post("/users/1/events")
-                            .with(request -> {
-                                request.setRemoteAddr("192.168.0.1");
-                                return request;
-                            })
-                            .content(objectMapper.writeValueAsString(newEventDto))
-                            .characterEncoding(StandardCharsets.UTF_8)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .accept(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isCreated());
-            verify(statsClient).get(any(),any());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    @Test
-    void getEventsAddedCurrentUser() {
-        try (MockedStatic<Stats> theMock = Mockito.mockStatic(Stats.class)) {
-            theMock.when(Stats::getStatsClient).thenReturn(statsClient);
-
-            when(statsClient.put(any())).thenReturn("Ответ");
-            mvc.perform(get("/users/1/events")
-                            .with(request -> {
-                                request.setRemoteAddr("192.168.0.1");
-                                return request;
-                            })
-                            .content(objectMapper.writeValueAsString(eventShortDtoList))
-                            .characterEncoding(StandardCharsets.UTF_8)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .accept(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isOk());
-            verify(statsClient).get(any(),any());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    @Test
-    void updateEventAndStatus() {
-        try (MockedStatic<Stats> theMock = Mockito.mockStatic(Stats.class)) {
-            theMock.when(Stats::getStatsClient).thenReturn(statsClient);
-
-            when(statsClient.put(any())).thenReturn("Ответ");
-            mvc.perform(patch("/admin/events/{eventId}")
-                            .with(request -> {
-                                request.setRemoteAddr("192.168.0.1");
-                                return request;
-                            })
-                            .content(objectMapper.writeValueAsString(eventFullDtoList.get(0)))
-                            .characterEncoding(StandardCharsets.UTF_8)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .accept(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isOk());
-            verify(statsClient).get(any(),any());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }*/
 }

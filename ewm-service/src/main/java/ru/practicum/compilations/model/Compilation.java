@@ -1,7 +1,7 @@
 package ru.practicum.compilations.model;
 
 import lombok.*;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity

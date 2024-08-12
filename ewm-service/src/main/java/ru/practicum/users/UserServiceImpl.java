@@ -27,7 +27,7 @@ import ru.practicum.users.request.converter.RequestMapper;
 import ru.practicum.users.request.dao.RequestRepository;
 import ru.practicum.users.request.model.ParticipationRequest;
 import ru.practicum.util.Util;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;

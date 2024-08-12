@@ -16,7 +16,7 @@ import ru.practicum.compilations.model.Compilation;
 import ru.practicum.events.dao.EventsRepository;
 import ru.practicum.events.model.Event;
 import ru.practicum.util.Util;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 

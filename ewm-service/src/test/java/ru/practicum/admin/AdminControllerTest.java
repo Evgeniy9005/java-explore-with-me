@@ -12,7 +12,7 @@ import ru.practicum.category.dto.NewCategoryDto;
 import ru.practicum.constants.State;
 import ru.practicum.data.Controller;
 import ru.practicum.users.request.NewUserRequest;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 
 import static org.mockito.ArgumentMatchers.any;

@@ -2,7 +2,7 @@ package ru.practicum.compilations;
 
 import ru.practicum.compilations.dto.CompilationDto;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface CompilationService {

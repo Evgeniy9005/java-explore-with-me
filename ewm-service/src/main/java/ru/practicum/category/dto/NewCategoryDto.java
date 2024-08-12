@@ -2,8 +2,8 @@ package ru.practicum.category.dto;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 
 @Data

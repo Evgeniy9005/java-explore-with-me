@@ -24,7 +24,7 @@ public class StatsClient {
     private String urlEnd = "end";
     private String urlUris = "uris";
     private String urlUnique = "unique";
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private String timeStartEncoding;
     private String timeEndEncoding;

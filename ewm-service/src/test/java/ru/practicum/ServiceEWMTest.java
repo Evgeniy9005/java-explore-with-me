@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.practicum.events.EventsService;
 import ru.practicum.users.UserService;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 
 @SpringBootTest

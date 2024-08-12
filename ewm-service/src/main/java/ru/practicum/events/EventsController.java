@@ -9,8 +9,8 @@ import ru.practicum.annotations.IdsValidate;
 import ru.practicum.constants.SortEvents;
 import ru.practicum.events.dto.EventFullDto;
 import ru.practicum.events.dto.EventShortDto;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Positive;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 
 @Slf4j

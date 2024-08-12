@@ -18,7 +18,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=evgeniy
 
   stats-db:
-      image: postgres:14-alpine
+      image: postgres:16.1
       container_name: stats-db-container
       ports:
         - "6541:5432"
@@ -47,7 +47,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=evgeniy
       - SPRING_DATASOURCE_PASSWORD=evgeniy
   ewm-db:
-    image: postgres:14-alpine
+    image: postgres:16.1
     container_name: ewm-db-container
     ports:
       - "6542:5432"

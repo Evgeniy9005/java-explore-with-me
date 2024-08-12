@@ -1,7 +1,7 @@
 package ru.practicum.annotations;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class DoHeBlankValidator implements ConstraintValidator<DoHeBlank, String> {
 

@@ -4,7 +4,7 @@ import lombok.*;
 import ru.practicum.category.model.Category;
 import ru.practicum.constants.State;
 import ru.practicum.users.model.User;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 

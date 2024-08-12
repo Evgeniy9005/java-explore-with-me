@@ -2,8 +2,8 @@ package ru.practicum.annotations;
 
 import ru.practicum.util.Util;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import java.time.LocalDateTime;
 
 public class DoDateArrivedValidator implements ConstraintValidator<DoDateArrived, String> {

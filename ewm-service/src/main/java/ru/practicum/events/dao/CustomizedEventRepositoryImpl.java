@@ -2,8 +2,8 @@ package ru.practicum.events.dao;
 
 import lombok.RequiredArgsConstructor;
 import ru.practicum.events.model.Event;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 import java.util.Map;
 

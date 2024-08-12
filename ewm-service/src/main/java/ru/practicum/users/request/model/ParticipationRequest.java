@@ -6,7 +6,7 @@ import ru.practicum.constants.StatusRequest;
 import ru.practicum.events.model.Event;
 import ru.practicum.users.model.User;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity

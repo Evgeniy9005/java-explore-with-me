@@ -8,7 +8,7 @@ import ru.practicum.users.request.EventRequestStatusUpdateResult;
 import ru.practicum.users.request.dto.ParticipationRequestDto;
 import ru.practicum.users.dto.UpdateEventUserRequest;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface UserService {
