@@ -14,14 +14,17 @@ public class Stats {
 
     private static String value;
 
-    private static StatsClient statsClient = new StatsClient("localhost","9090");
+    private static StatsClient statsClient;
 
     public static StatsClient getStatsClient() {
         return statsClient;
     }
 
     public static void setHost(String host) {
+
         value = host;
+
+        statsClient = new StatsClient(value,"9090");
     }
 
     public static String hit(String app, HttpServletRequest request) {

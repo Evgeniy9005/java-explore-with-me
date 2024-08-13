@@ -37,7 +37,7 @@ public class EventsServiceImpl implements EventsService {
 
     private Map<Integer,List<String>> address = new HashMap<>();
 
-    @Value("$host.stats")
+    @Value("${host.stats}")
     private String host;
 
     @Override

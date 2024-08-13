@@ -15,7 +15,7 @@ class StatsTest {
 
     @Test
     void getStatsClient() {
-        assertNotNull(Stats.getStatsClient());
+        assertNull(Stats.getStatsClient());
     }
 
    /* @Test
