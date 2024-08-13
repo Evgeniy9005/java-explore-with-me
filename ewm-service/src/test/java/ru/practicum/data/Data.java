@@ -1,13 +1,24 @@
 package ru.practicum.data;
 
 import dto.ViewStats;
+import lombok.extern.slf4j.Slf4j;
+import ru.practicum.admin.dto.UpdateEventAdminRequest;
 import ru.practicum.category.dto.CategoryDto;
-import ru.practicum.events.constants.State;
+import ru.practicum.category.model.Category;
+import ru.practicum.compilations.dto.NewCompilationDto;
+import ru.practicum.compilations.model.Compilation;
+import ru.practicum.constants.State;
+import ru.practicum.constants.StateAction;
+import ru.practicum.constants.StatusRequest;
 import ru.practicum.events.dto.EventFullDto;
 import ru.practicum.events.dto.EventShortDto;
 import ru.practicum.events.dto.NewEventDto;
+import ru.practicum.events.model.Event;
 import ru.practicum.events.model.Location;
 import ru.practicum.users.dto.UserShortDto;
+import ru.practicum.users.model.User;
+import ru.practicum.users.request.NewUserRequest;
+import ru.practicum.users.request.model.ParticipationRequest;
 
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
@@ -17,6 +28,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+
+@Slf4j
 public class Data {
 
     public static final LocalDateTime CREATED_DATE = LocalDateTime.of(2024,1,1,1,1);
@@ -27,9 +40,18 @@ public class Data {
 
 
     /**
+     <p><b>- NewCompilationDto</b> c параметром objects List(Integer);</p>
+     <p><b>- Compilation</b> c параметром objects List(Integer);</p>
+     <p><b>- NewUserRequest</b> баз параметров objects;</p>
+     <p><b>- User</b> баз параметров objects;</p>
+     <p><b>- Category</b> баз параметров objects;</p>
      <p><b>- EventShortDto</b> баз параметров objects;</p>
      <p><b>- EventFullDto</b> баз параметров objects;</p>
+     <p><b>- NewEventDto</b> баз параметров objects;</p>
+     <p><b>- Event</b> c параметрами objects User.class, Category.class;</p>
      <p><b>- ViewStats</b> баз параметров objects;</p>
+     <p><b>- ParticipationRequest</b> c параметрами objects Event.class, User.class;</p>
+
      */
     public static <T> List<T> generationData(Integer createObjects, Type t, Object... objects) {
 
@@ -43,6 +65,21 @@ public class Data {
 
         if (type.equals(ViewStats.class)) {
             return (D) new ViewStats("app","uri " + i, Long.valueOf(i));
+        }
+
+        if (type.equals(User.class)) {
+            return (D) User.builder()
+                    .id(i)
+                    .name("Пользователь" + i)
+                    .email("email" + i + "@mail.ru")
+                    .build();
+        }
+
+        if (type.equals(Category.class)) {
+            return (D) Category.builder()
+                    .id(i)
+                    .name("Категория" + i)
+                    .build();
         }
 
         if (type.equals(EventShortDto.class)) {
@@ -80,6 +117,30 @@ public class Data {
                     .build();
         }
 
+        if (type.equals(Event.class)) {
+                if (typeCheck(Event.class,objects,User.class,Category.class)) {
+                return (D) Event.builder()
+                    .id(i)
+                    .title("Заголовок " + i)
+                    .category((Category) objects[1])
+                    .eventDate(LocalDateTime.now().plusDays(1))
+                    .initiator((User) objects[0])
+                    .annotation("Краткое описание события" + i)
+                    .confirmedRequests(i + 1)
+                    .paid(true)
+                    .views(i * 10)
+                    .lat(50)
+                    .lon(50)
+                    .state(State.PENDING)
+                    .description("Полное описание события " + i)
+                    .participantLimit(0)
+                    .requestModeration(false)
+                    .publishedOn(LocalDateTime.now().plusMinutes(3))
+                    .createdOn(LocalDateTime.now())
+                    .build();
+                }
+        }
+
         if (type.equals(NewEventDto.class)) {
             return (D) NewEventDto.builder()
                     .title("Заголовок " + i)
@@ -94,79 +155,62 @@ public class Data {
                     .build();
         }
 
-        if (type.equals(NewEventDto.class)) {
-            return (D) NewEventDto.builder()
+        if (type.equals(ParticipationRequest.class)) {
+            if (typeCheck(ParticipationRequest.class,objects,Event.class,User.class)) {
+                return (D) ParticipationRequest.builder()
+                        .id(i)
+                        .event((Event) objects[0])
+                        .created(LocalDateTime.now())
+                        .requester((User) objects[1])
+                        .status(StatusRequest.PENDING)
+                        .build();
+            }
+        }
+
+        if (type.equals(UpdateEventAdminRequest.class)) {
+            return (D) UpdateEventAdminRequest.builder()
                     .title("Заголовок " + i)
+                    .annotation("Краткое описание, аннотация " + i)
                     .category(i)
                     .eventDate(LocalDateTime.now().plusDays(1).format(formatter))
-                    .annotation("Краткое описание " + i)
                     .paid(true)
                     .location(new Location(52.2f,54.4f))
-                    .description("Полное описание события " + i)
+                    .description("Полное описание события, описание " + i)
                     .participantLimit(0)
                     .requestModeration(false)
+                    .stateAction(StateAction.PUBLISH_EVENT.toString())
                     .build();
         }
-/*
-        if (type.equals(Item.class)) {
-            if (objects.length == 2) {
-                if (objects[0].getClass().equals(User.class) && objects[1].getClass().equals(Long.class)) {
 
-                    return (D) new Item(i, "item" + i, "описание вещи " + i, true, (User) objects[0],(long)objects[1]);
-                }
-            }
+        if (type.equals(Category.class)) {
+            return (D) Category.builder()
+                    .id(i)
+                    .name("Категория" + i)
+                    .build();
         }
 
-
-        if (type.equals(Booking.class)) {
-            if (objects.length == 2) {
-                if (objects[0].getClass().equals(User.class) && objects[1].getClass().equals(Item.class)) {
-                    try {
-                        Thread.sleep(20);
-                    } catch (InterruptedException e) {
-                        System.out.println(e);
-                    }
-                    return (D) Booking.builder()
-                            .id(i)
-                            .booker((User) objects[0])
-                            .item((Item) objects[1])
-                            .start(LocalDateTime.now())
-                            .end(LocalDateTime.now().plusDays(1))
-                            .status(Status.APPROVED)
-                            .build();
-                }
-            }
-
+        if (type.equals(NewUserRequest.class)) {
+            return (D) new NewUserRequest("email@mail" + i, "User" + i);
         }
 
-        if (type.equals(CreateBooking.class)) {
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
-            if (objects.length == 1) {
-                if (objects[0].getClass().equals(Long.class)) {
-                    return (D) new CreateBooking((long) objects[0],
-                            LocalDateTime.now().plusSeconds(60),
-                            LocalDateTime.now().plusDays(1));
-                }
-            }
+        if (type.equals(Compilation.class) && objects.length == 1) {
+                return (D) Compilation.builder()
+                        .id(i)
+                        .events(String.valueOf(objects[0]))
+                        .pinned(true)
+                        .title("Заголовок" + i)
+                        .build();
         }
 
-        if (type.equals(Comment.class)) {
-            if (objects.length == 2) {
-                if (objects[0].getClass().equals(Item.class) && objects[1].getClass().equals(User.class)) {
-                    return (D) Comment.builder()
-                            .id(i)
-                            .text("Text" + i)
-                            .item((Item) objects[0])
-                            .author((User) objects[1])
-                            .created(LocalDateTime.of(2024,1,1,1,1,1))
-                            .build();
-                }
+        if (type.equals(NewCompilationDto.class) && objects.length == 1) {
+            if (typeCheck(Event.class,objects,List.class)) {
+                return (D) NewCompilationDto.builder()
+                        .events((List<Integer>) objects[0])
+                        .pinned(true)
+                        .title("Заголовок" + i)
+                        .build();
             }
-        }*/
+        }
 
         return null;
     }
@@ -198,4 +242,39 @@ public class Data {
         System.out.println("***************************************************************");
     }
 
+    private static boolean typeCheck(Type generated, Object[] objects, Type t1, Type t2) {
+
+        if (objects.length == 2) {
+            if (objects[0].getClass().equals(t1) && objects[1].getClass().equals(t2)) {
+                return true;
+            } else {
+                System.out.println(
+                        String.format("Входные параметры должен быть 2 t1 = %s, t2 = %s для создания %s!",t1,t2,generated));
+            return false;
+            }
+
+        } else {
+            System.out.println(
+                    String.format("Входные параметры должен быть 2 t1 = %s, t2 = %s для создания %s!",t1,t2,generated));
+            return false;
+        }
+    }
+
+    private static boolean typeCheck(Type generated, Object[] objects, Type t1) {
+
+        if (objects.length == 1) {
+            if (objects[0].getClass().equals(t1)) {
+                return true;
+            } else {
+                System.out.println(
+                        String.format("Входные параметры должен быть 1 t1 = %s для создания %s!",t1,generated));
+                return false;
+            }
+
+        } else {
+            System.out.println(
+                    String.format("Входные параметры должен быть 1 t1 = %s для создания %s!",t1,generated));
+            return false;
+        }
+    }
 }

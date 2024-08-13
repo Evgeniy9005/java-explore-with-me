@@ -1,9 +1,9 @@
-package ru.practicum.model;
+package ru.practicum.exceptions.model;
 
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -11,21 +11,21 @@ import java.util.Objects;
 @Getter
 @ToString
 @Builder(toBuilder = true)
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "stats", schema = "public")
 public class EndpointHit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private final int id;
     @Column(name = "app")
-    private String app;
+    private final String app;
     @Column(name = "uri")
-    private String uri;
+    private final String uri;
     @Column(name = "ip")
-    private String ip;
+    private final String ip;
     @Column(name = "timestamp")
-    private LocalDateTime timestamp = LocalDateTime.now();
+    @Builder.Default
+    private final LocalDateTime timestamp = LocalDateTime.now();
 
     @Override
     public boolean equals(Object o) {

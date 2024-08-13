@@ -8,15 +8,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.practicum.dao.StatsRepository;
-import ru.practicum.model.EndpointHit;
-import ru.practicum.model.EndpointHitMapper;
-import ru.practicum.model.EndpointHitMapperImpl;
+import ru.practicum.exceptions.model.EndpointHit;
+import ru.practicum.exceptions.model.EndpointHitMapper;
+import ru.practicum.exceptions.model.EndpointHitMapperImpl;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
-//import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -70,7 +68,7 @@ class StatsServiceImplTest {
                 .app("app")
                 .uri("/uri")
                 .ip("198.168.0.1")
-                .timestamp(time)
+               // .timestamp(time)
                 .build();
 
         endpointHitDto = EndpointHitDto.builder()

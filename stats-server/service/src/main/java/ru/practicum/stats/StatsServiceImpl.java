@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dao.StatsRepository;
-import ru.practicum.model.EndpointHit;
-import ru.practicum.model.EndpointHitMapper;
+import ru.practicum.exceptions.model.EndpointHit;
+import ru.practicum.exceptions.model.EndpointHitMapper;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -30,6 +30,7 @@ public class StatsServiceImpl implements StatsService {
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+    @Override
     @Transactional
     public EndpointHitDto addStats(EndpointHitDto endpointHitDto) {
         EndpointHit save = repository.save(mapper.toEndpointHit(endpointHitDto));
@@ -43,20 +44,7 @@ public class StatsServiceImpl implements StatsService {
         List<String> urisList =  new ArrayList<>();
         List<ViewStats> viewStatsList = null;
 
-        /*if (start != null || start.isBlank()) {
-            timeStart = LocalDateTime.parse(start, formatter);
-        } else {
-            timeStart = LocalDateTime.now();
-        }*/
-
         timeStart = LocalDateTime.parse(start, formatter);
-
-
-        /*if (end != null || end.isBlank()) {
-            timeEnd = LocalDateTime.parse(end, formatter);
-        } else {
-            timeEnd = LocalDateTime.now();
-        }*/
 
         timeEnd = LocalDateTime.parse(end, formatter);
 

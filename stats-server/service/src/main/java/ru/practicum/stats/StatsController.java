@@ -27,16 +27,10 @@ public class StatsController {
     @GetMapping("/stats")
     public List<ViewStats> getStats(
             @RequestParam (defaultValue = "#{defaultDateTime.getDate()}") String start,
-            @RequestParam (//name="end",
-                     defaultValue = "#{defaultDateTime.getDate()}")//"#{T(java.time.LocalDateTime).now()}")
-                     String end,
+            @RequestParam (defaultValue = "#{defaultDateTime.getDate()}") String end,
             @RequestParam (required = false) String uris,
             @RequestParam (defaultValue = "false") Boolean unique
     ) {
         return service.getStats(start,end,uris,unique);
     }
-
-   /* private String defaultDateTime(){
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }*/
 }

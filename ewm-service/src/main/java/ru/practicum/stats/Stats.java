@@ -5,17 +5,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dto.EndpointHitDto;
 import ru.practicum.client.StatsClient;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Stats {
     private static ObjectMapper objectMapper = new ObjectMapper();
 
-    private static StatsClient statsClient = new StatsClient("localhost","9090");
+    private static String value;
+
+    private static StatsClient statsClient;
 
     public static StatsClient getStatsClient() {
         return statsClient;
+    }
+
+    public static void setHost(String host) {
+
+        value = host;
+
+        statsClient = new StatsClient(value,"9090");
     }
 
     public static String hit(String app, HttpServletRequest request) {
