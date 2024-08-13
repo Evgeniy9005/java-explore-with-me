@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ConflictException;
 import ru.practicum.NotFoundException;
 import ru.practicum.category.dao.CategoryRepository;
@@ -80,6 +81,7 @@ public class UserServiceImpl implements UserService {
 
      //Добавление нового события пользователем
     @Override
+    @Transactional
     public EventFullDto addEventUser(NewEventDto newEventDto, int userId, HttpServletRequest request) {
         log.info("{} Добавление нового события {} пользователем {}",USERS,newEventDto,userId);
         Location location = newEventDto.getLocation();
@@ -133,6 +135,7 @@ public class UserServiceImpl implements UserService {
 
     //Изменение события добавленного текущим пользователем
     @Override
+    @Transactional
     public EventFullDto upEventAddedByCurrentUser(UpdateEventUserRequest eventUserRequest,
                                                             int userId,
                                                             int eventId,
@@ -183,6 +186,7 @@ public class UserServiceImpl implements UserService {
 
     //Изменение статуса (подтверждена, отменена) заявок на участие в событии текущего пользователя
     @Override
+    @Transactional
     public EventRequestStatusUpdateResult upStatusApplicationsParticipationEventCurrentUser(
             EventRequestStatusUpdateRequest updateRequest,
             int userId,
@@ -311,6 +315,7 @@ public class UserServiceImpl implements UserService {
 
     //Добавление запроса от текущего пользователя на участие в событии
     @Override
+    @Transactional
     public ParticipationRequestDto addRequestCurrentUserParticipateEvent(int userId,
                                                                          int eventId,
                                                                          HttpServletRequest request
@@ -373,6 +378,7 @@ public class UserServiceImpl implements UserService {
 
     //Отмена своего запроса на участие в событии ("/users/{userId}/requests/{requestId}/cancel")
     @Override
+    @Transactional
     public ParticipationRequestDto upEventToParticipateCancel(int userId,
                                                                int requestId,
                                                                HttpServletRequest request

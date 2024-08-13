@@ -30,6 +30,7 @@ public class StatsServiceImpl implements StatsService {
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+    @Override
     @Transactional
     public EndpointHitDto addStats(EndpointHitDto endpointHitDto) {
         EndpointHit save = repository.save(mapper.toEndpointHit(endpointHitDto));

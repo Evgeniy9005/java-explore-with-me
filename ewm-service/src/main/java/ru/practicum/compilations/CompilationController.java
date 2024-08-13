@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Positive;
 import java.util.List;
 
 
-@Slf4j
+
 @RestController
 @RequestMapping("/compilations")
 @RequiredArgsConstructor

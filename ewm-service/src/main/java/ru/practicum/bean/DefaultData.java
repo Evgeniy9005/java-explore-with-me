@@ -9,9 +9,6 @@ import java.util.stream.IntStream;
 
 @Component
 public class DefaultData {
-    private List<Integer> ids = new ArrayList<>(1000);
-
-    private List<State> stateList = new ArrayList<>();
 
     public List<Integer> getIdList() {
         return  IntStream.iterate(1, i -> i + 1).mapToObj(i -> i)
@@ -20,6 +17,7 @@ public class DefaultData {
     }
 
     public List<State> getStateList() {
+        List<State> stateList = new ArrayList<>();
         stateList.add(State.CANCELED);
         stateList.add(State.PUBLISHED);
         stateList.add(State.PENDING);

@@ -103,7 +103,11 @@ public class Event {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Event event = (Event) o;
-        return id == event.id && confirmedRequests == event.confirmedRequests && Float.compare(event.lat, lat) == 0 && Float.compare(event.lon, lon) == 0 && paid == event.paid && participantLimit == event.participantLimit && requestModeration == event.requestModeration && views == event.views && compilation == event.compilation && Objects.equals(annotation, event.annotation) && Objects.equals(category, event.category) && Objects.equals(createdOn, event.createdOn) && Objects.equals(description, event.description) && Objects.equals(eventDate, event.eventDate) && Objects.equals(initiator, event.initiator) && Objects.equals(publishedOn, event.publishedOn) && state == event.state && Objects.equals(title, event.title);
+        return id == event.id &&
+                confirmedRequests == event.confirmedRequests &&
+                Float.compare(event.lat, lat) == 0 &&
+                Float.compare(event.lon, lon) == 0 &&
+                paid == event.paid && participantLimit == event.participantLimit && requestModeration == event.requestModeration && views == event.views && compilation == event.compilation && Objects.equals(annotation, event.annotation) && Objects.equals(category, event.category) && Objects.equals(createdOn, event.createdOn) && Objects.equals(description, event.description) && Objects.equals(eventDate, event.eventDate) && Objects.equals(initiator, event.initiator) && Objects.equals(publishedOn, event.publishedOn) && state == event.state && Objects.equals(title, event.title);
     }
 
     @Override

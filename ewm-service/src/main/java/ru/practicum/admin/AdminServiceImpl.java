@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ConflictException;
 import ru.practicum.NotFoundException;
 import ru.practicum.admin.dto.UpdateEventAdminRequest;
@@ -70,6 +71,7 @@ public class AdminServiceImpl implements AdminService {
 
     /*Добавление новой категории*/
     @Override
+    @Transactional
     public CategoryDto addNewCategory(NewCategoryDto newCategoryDto,HttpServletRequest request) {
         Category category;
         log.info("Входные параметры при добавлении категории! newCategoryDto = {}",newCategoryDto);
@@ -97,6 +99,7 @@ public class AdminServiceImpl implements AdminService {
 
     /*Изменение категории*/
     @Override
+    @Transactional
     public CategoryDto upCategory(CategoryDto categoryDto, Integer catId, HttpServletRequest request) {
 
         Category upCategory;
@@ -150,6 +153,7 @@ public class AdminServiceImpl implements AdminService {
 
     /*Редактирование данных события и его статуса (отклонение/публикация).*/
     @Override
+    @Transactional
     public EventFullDto upEvent(UpdateEventAdminRequest eventAdminRequest, int eventId,HttpServletRequest request) {
         Integer categoryId = eventAdminRequest.getCategory();
         Category category = null;
@@ -195,6 +199,7 @@ public class AdminServiceImpl implements AdminService {
 
     /*Добавление нового пользователя*/
     @Override
+    @Transactional
     public UserDto addNewUser(NewUserRequest newUserRequest, HttpServletRequest request) {
         log.info("{} Запрос на добавления пользователя {} ",ADMIN, newUserRequest);
         User user = userRepository.save(User.builder()
@@ -217,6 +222,7 @@ public class AdminServiceImpl implements AdminService {
 
     /*Добавление новой подборки (подборка может не содержать событий)*/
     @Override
+    @Transactional
     public CompilationDto addNewCompilation(NewCompilationDto newCompilationDto,HttpServletRequest request) {
         log.info("Входные параметры при добавлении подборки событий newCompilationDto = {}",newCompilationDto);
         List<Event> eventList = new ArrayList<>();
@@ -254,6 +260,7 @@ public class AdminServiceImpl implements AdminService {
 
     /*Обновить информацию о подборке*/
     @Override
+    @Transactional
     public CompilationDto upCompilation(UpdateCompilationRequest ucr, int compId, HttpServletRequest request) {
         log.info("Входные параметры при обновлении подборки compId = {}, ucr {}",compId,ucr);
 
