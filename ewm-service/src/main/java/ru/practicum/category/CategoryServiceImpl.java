@@ -2,6 +2,7 @@ package ru.practicum.category;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.practicum.NotFoundException;
 import ru.practicum.category.converter.CategoryMapper;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 import static ru.practicum.stats.Stats.getStatsClient;
 import static ru.practicum.stats.Stats.hit;
+import static ru.practicum.stats.Stats.setHost;
 
 @Slf4j
 @Service
@@ -28,8 +30,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryMapper categoryMapper;
 
+    @Value("${host.stats}")
+    private String host;
+
     @Override
     public List<CategoryDto> getCategories(int from, int size, HttpServletRequest request) {
+        setHost(host);
         log.info("{} отправлена статистика {}",CATEGORY,getStatsClient().put(hit(APP,request)));
         log.info("{} запрос на получение списка категорий от {} до {}",CATEGORY,from,size);
         List<CategoryDto> categoryDtoList = categoryRepository.findAll(Util.page(from,size))
@@ -40,6 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto getCategory(Integer catId, HttpServletRequest request) {
+        setHost(host);
         log.info("{} отправлена статистика {}",CATEGORY,getStatsClient().put(hit(APP,request)));
         log.info("{} запрос на получение категории по id {}",CATEGORY, catId);
         Category category = categoryRepository.findById(catId)

@@ -12,10 +12,16 @@ import java.time.format.DateTimeFormatter;
 public class Stats {
     private static ObjectMapper objectMapper = new ObjectMapper();
 
+    private static String value;
+
     private static StatsClient statsClient = new StatsClient("localhost","9090");
 
     public static StatsClient getStatsClient() {
         return statsClient;
+    }
+
+    public static void setHost(String host) {
+        value = host;
     }
 
     public static String hit(String app, HttpServletRequest request) {

@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.8'
 services:
   stats-server:
     build: stats-server
@@ -11,7 +11,7 @@ services:
     environment:
       - INIT_SCHEMA=classpath*:schema_postgres.sql
       - INIT_DATA=classpath*:data_postgres.sql
-      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQL10Dialect
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
       - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/stats
       - SPRING_DATASOURCE_USERNAME=evgeniy
@@ -37,15 +37,15 @@ services:
       - "8080:8080"
     depends_on:
       - ewm-db
-    #  - ewm-stats
     environment:
       - INIT_SCHEMA=classpath*:schema_postgres.sql
       - INIT_DATA=classpath*:data_postgres.sql
-      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQL10Dialect
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/stats
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewm
       - SPRING_DATASOURCE_USERNAME=evgeniy
       - SPRING_DATASOURCE_PASSWORD=evgeniy
+      - HOST.STATS=stats-server
   ewm-db:
     image: postgres:16.1
     container_name: ewm-db-container

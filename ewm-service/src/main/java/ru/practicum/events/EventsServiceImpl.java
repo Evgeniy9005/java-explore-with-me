@@ -2,6 +2,7 @@ package ru.practicum.events;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.practicum.NotFoundException;
 import ru.practicum.constants.SortEvents;
@@ -19,8 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static ru.practicum.stats.Stats.getStatsClient;
-import static ru.practicum.stats.Stats.hit;
+import static ru.practicum.stats.Stats.*;
 
 @Slf4j
 @Service
@@ -37,6 +37,9 @@ public class EventsServiceImpl implements EventsService {
 
     private Map<Integer,List<String>> address = new HashMap<>();
 
+    @Value("$host.stats")
+    private String host;
+
     @Override
     public List<EventShortDto> getEvents(
             String text,//текст для поиска в содержимом аннотации и подробном описании события
@@ -50,6 +53,7 @@ public class EventsServiceImpl implements EventsService {
             int size,
             HttpServletRequest request
     ) {
+        setHost(host);
         log.info("{} Отправлена статистика {}",EVENTS,getStatsClient().put(hit(APP,request)));
 
         log.info("Входные параметры text = {}, categories = {}, paid = {}, " +
@@ -132,6 +136,7 @@ public class EventsServiceImpl implements EventsService {
 
     @Override //для публичного эндпоинта можно вернуть только опубликованные события
     public EventFullDto getEvent(int id, HttpServletRequest request) {
+        setHost(host);
         log.info("{} Отправлена статистика {}",EVENTS,getStatsClient().put(hit(APP,request)));
         String ip = request.getRemoteAddr();
 
