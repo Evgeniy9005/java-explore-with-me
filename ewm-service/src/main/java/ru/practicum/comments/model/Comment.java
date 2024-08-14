@@ -14,24 +14,25 @@ import java.util.Objects;
 @ToString
 @Builder(toBuilder = true)
 @Table(name = "comments", schema = "public")
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final int id;
+    private int id;
 
     @Column(name = "text")
-    private final String text;
+    private String text;
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "id_author")
-    private final User author;
+    private User author;
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "id_event")
-    private final Event event;
+    private Event event;
 
     @Column(name = "created")
-    private final LocalDateTime created;
+    private LocalDateTime created;
 
 }
