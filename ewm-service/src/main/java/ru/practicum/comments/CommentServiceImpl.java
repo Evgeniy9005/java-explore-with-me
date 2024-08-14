@@ -47,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
 
         State state = event.getState();
 
-        if(!state.equals(State.PUBLISHED)) {
+        if (!state.equals(State.PUBLISHED)) {
             throw new BadRequestException("Нельзя оставить комментарий на не опубликованное событие #",eventId);
         }
 
@@ -95,7 +95,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentDto> getCommentsEvent(int eventId, int from, int size) {
 
-        if(!eventsRepository.existsById(eventId)) {
+        if (!eventsRepository.existsById(eventId)) {
             throw new NotFoundException("Не найдено событие # при получении его комментариев!",eventId);
         }
 
@@ -118,11 +118,11 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundException("Не найден комментарий # при удалении комментария!",commentId));
 
-        if(comment.getEvent().getId() != eventId) {
+        if (comment.getEvent().getId() != eventId) {
             throw new BadRequestException("Комментария # на событие # не существует!",commentId,eventId);
         }
 
-        if(comment.getAuthor().getId() != userId) {
+        if (comment.getAuthor().getId() != userId) {
             throw new BadRequestException("Пользователь # не делал комментарий # к событию #!",userId,commentId,eventId);
         }
 

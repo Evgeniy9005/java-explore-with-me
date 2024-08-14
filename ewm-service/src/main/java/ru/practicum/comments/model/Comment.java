@@ -7,7 +7,7 @@ import ru.practicum.events.model.Event;
 import ru.practicum.users.model.User;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
+
 
 @Entity
 @Getter

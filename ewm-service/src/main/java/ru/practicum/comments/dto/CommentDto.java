@@ -1,12 +1,8 @@
 package ru.practicum.comments.dto;
 
-import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
-import ru.practicum.events.model.Event;
-import ru.practicum.users.model.User;
 
-import java.time.LocalDateTime;
 
 @Data
 @Builder(toBuilder = true)

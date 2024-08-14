@@ -26,7 +26,7 @@ public class CommentController {
                                  @RequestHeader("X-EWM-User-Id") @Positive int userId
     ) {
         return commentService.addComment(text,eventId,userId);
-    };
+    }
 
     @PatchMapping("/comments/{commentId}")
     public CommentDto upComment(@RequestParam @NotBlank String text,
