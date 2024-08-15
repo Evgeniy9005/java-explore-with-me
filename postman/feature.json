@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "01467774-b669-4e7b-b22b-9b279d770fda",
+		"_postman_id": "64e68bd4-21b4-4e84-a9a8-6546bd50e0c9",
 		"name": "feature_comments",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "31372539"
@@ -257,7 +257,7 @@
 				"header": [
 					{
 						"key": "X-EWM-User-Id",
-						"value": "1",
+						"value": "138",
 						"type": "text"
 					},
 					{
@@ -295,7 +295,7 @@
 					"variable": [
 						{
 							"key": "eventId",
-							"value": "1"
+							"value": "107"
 						}
 					]
 				}
@@ -365,7 +365,7 @@
 					"variable": [
 						{
 							"key": "eventId",
-							"value": "1"
+							"value": "107"
 						}
 					]
 				}
@@ -406,7 +406,7 @@
 				"header": [
 					{
 						"key": "X-EWM-User-Id",
-						"value": "1",
+						"value": "138",
 						"type": "text"
 					},
 					{
@@ -444,7 +444,7 @@
 					"variable": [
 						{
 							"key": "eventId",
-							"value": "1"
+							"value": "107"
 						}
 					]
 				}
@@ -483,7 +483,7 @@
 				"header": [
 					{
 						"key": "X-EWM-User-Id",
-						"value": "100",
+						"value": "1000",
 						"type": "text"
 					},
 					{
@@ -502,7 +502,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/comments/1?text=комментарий 1",
+					"raw": "http://localhost:8080/comments/:eventId?text=комментарий 1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -510,12 +510,18 @@
 					"port": "8080",
 					"path": [
 						"comments",
-						"1"
+						":eventId"
 					],
 					"query": [
 						{
 							"key": "text",
 							"value": "комментарий 1"
+						}
+					],
+					"variable": [
+						{
+							"key": "eventId",
+							"value": "107"
 						}
 					]
 				}
@@ -554,7 +560,7 @@
 				"header": [
 					{
 						"key": "X-EWM-User-Id",
-						"value": "1",
+						"value": "138",
 						"type": "text"
 					},
 					{
@@ -573,7 +579,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/comments/1000?text=комментарий 1",
+					"raw": "http://localhost:8080/comments/:eventId?text=комментарий 1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -581,12 +587,18 @@
 					"port": "8080",
 					"path": [
 						"comments",
-						"1000"
+						":eventId"
 					],
 					"query": [
 						{
 							"key": "text",
 							"value": "комментарий 1"
+						}
+					],
+					"variable": [
+						{
+							"key": "eventId",
+							"value": "1000"
 						}
 					]
 				}
@@ -626,7 +638,7 @@
 				"header": [
 					{
 						"key": "X-EWM-User-Id",
-						"value": "1",
+						"value": "138",
 						"type": "text"
 					},
 					{
@@ -645,7 +657,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/comments/1?text=Обновленный комментарий 1",
+					"raw": "http://localhost:8080/comments/:commentId?text=Обновленный комментарий 1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -653,12 +665,18 @@
 					"port": "8080",
 					"path": [
 						"comments",
-						"1"
+						":commentId"
 					],
 					"query": [
 						{
 							"key": "text",
 							"value": "Обновленный комментарий 1"
+						}
+					],
+					"variable": [
+						{
+							"key": "commentId",
+							"value": "1"
 						}
 					]
 				}
@@ -698,7 +716,7 @@
 				"header": [
 					{
 						"key": "X-EWM-User-Id",
-						"value": "1",
+						"value": "138",
 						"type": "text"
 					},
 					{
@@ -717,7 +735,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/comments/1000?text=Не обновленный коментарий 1",
+					"raw": "http://localhost:8080/comments/:commentId?text=Не обновленный коментарий 1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -725,12 +743,18 @@
 					"port": "8080",
 					"path": [
 						"comments",
-						"1000"
+						":commentId"
 					],
 					"query": [
 						{
 							"key": "text",
 							"value": "Не обновленный коментарий 1"
+						}
+					],
+					"variable": [
+						{
+							"key": "commentId",
+							"value": "1000"
 						}
 					]
 				}
@@ -770,7 +794,7 @@
 				"header": [
 					{
 						"key": "X-EWM-User-Id",
-						"value": "100",
+						"value": "1000",
 						"type": "text"
 					},
 					{
@@ -789,7 +813,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/comments/1?text=Не обновленный коментарий 1",
+					"raw": "http://localhost:8080/comments/:commentId?text=Не обновленный коментарий 1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -797,12 +821,18 @@
 					"port": "8080",
 					"path": [
 						"comments",
-						"1"
+						":commentId"
 					],
 					"query": [
 						{
 							"key": "text",
 							"value": "Не обновленный коментарий 1"
+						}
+					],
+					"variable": [
+						{
+							"key": "commentId",
+							"value": "1"
 						}
 					]
 				}
@@ -921,7 +951,7 @@
 				"header": [
 					{
 						"key": "X-EWM-User-Id",
-						"value": "2",
+						"value": "139",
 						"type": "text"
 					},
 					{
@@ -940,7 +970,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/comments/1?text=Не обновленный коментарий 1",
+					"raw": "http://localhost:8080/comments/:commentId?text=Не обновленный коментарий 1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -948,12 +978,18 @@
 					"port": "8080",
 					"path": [
 						"comments",
-						"1"
+						":commentId"
 					],
 					"query": [
 						{
 							"key": "text",
 							"value": "Не обновленный коментарий 1"
+						}
+					],
+					"variable": [
+						{
+							"key": "commentId",
+							"value": "1"
 						}
 					]
 				}
@@ -1011,7 +1047,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/2/requests?eventId=1",
+					"raw": "http://localhost:8080/users/:userId/requests?eventId=107",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1019,13 +1055,19 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"2",
+						":userId",
 						"requests"
 					],
 					"query": [
 						{
 							"key": "eventId",
-							"value": "1"
+							"value": "107"
+						}
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "139"
 						}
 					]
 				}
@@ -1066,7 +1108,7 @@
 				"header": [
 					{
 						"key": "X-EWM-User-Id",
-						"value": "2",
+						"value": "139",
 						"type": "text"
 					},
 					{
@@ -1085,7 +1127,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/comments/1?text=комментарий от пользователя 2",
+					"raw": "http://localhost:8080/comments/:eventId?text=комментарий от пользователя 2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1093,12 +1135,18 @@
 					"port": "8080",
 					"path": [
 						"comments",
-						"1"
+						":eventId"
 					],
 					"query": [
 						{
 							"key": "text",
 							"value": "комментарий от пользователя 2"
+						}
+					],
+					"variable": [
+						{
+							"key": "eventId",
+							"value": "107"
 						}
 					]
 				}
@@ -1161,7 +1209,7 @@
 					"variable": [
 						{
 							"key": "eventId",
-							"value": "1"
+							"value": "107"
 						}
 					]
 				}
@@ -1255,10 +1303,6 @@
 				"method": "GET",
 				"header": [
 					{
-						"key": "X-EWM-Event-Id",
-						"value": "1"
-					},
-					{
 						"key": "Accept",
 						"value": "*/*"
 					},
@@ -1269,7 +1313,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/comments/1?from=0&size=1",
+					"raw": "http://localhost:8080/comments/:eventId?from=0&size=1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1277,7 +1321,7 @@
 					"port": "8080",
 					"path": [
 						"comments",
-						"1"
+						":eventId"
 					],
 					"query": [
 						{
@@ -1287,6 +1331,12 @@
 						{
 							"key": "size",
 							"value": "1"
+						}
+					],
+					"variable": [
+						{
+							"key": "eventId",
+							"value": "107"
 						}
 					]
 				}
@@ -1331,7 +1381,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/comments/1?from=0&size=0",
+					"raw": "http://localhost:8080/comments/:eventId?from=0&size=0",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1339,7 +1389,7 @@
 					"port": "8080",
 					"path": [
 						"comments",
-						"1"
+						":eventId"
 					],
 					"query": [
 						{
@@ -1349,6 +1399,12 @@
 						{
 							"key": "size",
 							"value": "0"
+						}
+					],
+					"variable": [
+						{
+							"key": "eventId",
+							"value": "107"
 						}
 					]
 				}
@@ -1450,7 +1506,7 @@
 				"header": [
 					{
 						"key": "X-EWM-User-Id",
-						"value": "1"
+						"value": "138"
 					},
 					{
 						"key": "Accept",
@@ -1482,7 +1538,7 @@
 						},
 						{
 							"key": "eventId",
-							"value": "2"
+							"value": "108"
 						}
 					]
 				}
@@ -1512,7 +1568,7 @@
 				"header": [
 					{
 						"key": "X-EWM-User-Id",
-						"value": "1"
+						"value": "138"
 					},
 					{
 						"key": "Accept",
@@ -1544,7 +1600,7 @@
 						},
 						{
 							"key": "eventId",
-							"value": "1"
+							"value": "107"
 						}
 					]
 				}
@@ -1574,7 +1630,7 @@
 				"header": [
 					{
 						"key": "X-EWM-User-Id",
-						"value": "1"
+						"value": "138"
 					},
 					{
 						"key": "Accept",
@@ -1606,7 +1662,7 @@
 						},
 						{
 							"key": "eventId",
-							"value": "1"
+							"value": "107"
 						}
 					]
 				}
@@ -1748,7 +1804,7 @@
 						},
 						{
 							"key": "eventId",
-							"value": "1"
+							"value": "107"
 						}
 					]
 				}
@@ -1816,7 +1872,7 @@
 					"variable": [
 						{
 							"key": "eventId",
-							"value": "1"
+							"value": "107"
 						}
 					]
 				}
