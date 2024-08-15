@@ -63,34 +63,6 @@ public class Util {
         }
     }
 
-   /* public static <T> List<T> getElementsFrom(List<T> list, int start) {
-
-        return list.stream().skip(start).collect(Collectors.toList());
-    }*/
-
-    /*public static List<Integer> getNumbers(String arrayString) {
-        if (arrayString == null) {
-            throw new BadRequestException(
-                    "Не верно заданы входные параметры #, " +
-                            "Массив данных должен быть числа и разделены запятыми, без пробелов",arrayString);
-        }
-
-        String [] result = arrayString.split(",");
-
-        List<Integer> list = Arrays.stream(result).map(i -> {
-            try {
-                return Integer.parseInt(i);
-            } catch (NumberFormatException e) {
-                throw new BadRequestException(
-                        "Не верно заданы входные параметры #, " +
-                                "Массив данных должен быть числа и разделены запятыми, без пробелов",arrayString);
-            }
-        }).collect(Collectors.toList());
-        log.info("Сформированный массив из строки - {}",list);
-        return list;
-
-    }*/
-
     public static DateTimeFormatter getFormatter() {
         return formatter;
     }
@@ -119,16 +91,4 @@ public class Util {
         }
         return endDate;
     }
-
-
-   /* public static String encodeValue(String value) {
-        String result = "";
-        try {
-            URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
-        } catch (UnsupportedEncodingException e) {
-            log.debug("Ошибка расшифровки данных {}",value);
-        }
-        return result;
-    }*/
-
 }

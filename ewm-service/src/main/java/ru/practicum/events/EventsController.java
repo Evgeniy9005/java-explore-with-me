@@ -2,7 +2,6 @@ package ru.practicum.events;
 
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.annotations.IdsValidate;
@@ -13,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Positive;
 import java.util.List;
 
-@Slf4j
+
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
